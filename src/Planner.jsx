@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import Dashboard from "./Dashboard";
 
 // Format: [name, source, technique, minutes, url, starred]
 // Sources: C=CSES, UB=USACO Bronze, US=USACO Silver, UG=USACO Gold, UP=USACO Plat, CF=Codeforces, CT=Team
@@ -720,6 +721,7 @@ export default function Planner() {
   const [checked, setChecked] = useState(loadProgress);
   const [filterStarred, setFilterStarred] = useState(false);
   const [showExport, setShowExport] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => { saveProgress(checked); }, [checked]);
 
@@ -865,6 +867,9 @@ export default function Planner() {
           ))}
         </div>
 
+        {/* Dashboard */}
+        {showDashboard && <Dashboard weeks={WEEKS} checked={checked} />}
+
         {/* Week Selector */}
         <div style={{display:"flex",gap:3,marginBottom:4,overflowX:"auto",paddingBottom:4}}>
           {WEEKS.map((wk,i) => {
@@ -904,6 +909,13 @@ export default function Planner() {
           <span style={{color:"rgba(255,255,255,0.2)"}}>S17–20</span>
           <span style={{color:"#ff6b9d",letterSpacing:1}}>SIMULACROS</span>
           <div style={{marginLeft:"auto",display:"flex",gap:6}}>
+            <button onClick={() => setShowDashboard(!showDashboard)} style={{
+              padding:"3px 8px",borderRadius:4,border:"none",cursor:"pointer",fontSize:9,fontFamily:"monospace",
+              background:showDashboard?"#a78bfa20":"rgba(255,255,255,0.04)",
+              color:showDashboard?"#a78bfa":"rgba(255,255,255,0.4)",
+            }}>
+              📊 Dashboard
+            </button>
             <button onClick={() => setFilterStarred(!filterStarred)} style={{
               padding:"3px 8px",borderRadius:4,border:"none",cursor:"pointer",fontSize:9,fontFamily:"monospace",
               background:filterStarred?"#fbbf2420":"rgba(255,255,255,0.04)",
