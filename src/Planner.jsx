@@ -116,6 +116,7 @@ const WEEKS = [
         ["Giant Pizza","C","scc",70,C+"1684",0],
         ["Coin Collector","C","scc",50,C+"1686",0],
         ["Sleepy Cow Herding","UB","impl",30,U+"915",0],
+        ["Exponentiation","C","adv",30,C+"1712",1],
       ]],
       ["Jue",[
         ["Mail Delivery","C","graph",60,C+"1691",0],
@@ -161,6 +162,7 @@ const WEEKS = [
         ["Room Allocation","C","greedy",45,C+"1164",0],
         ["Factory Machines","C","bs",40,C+"1620",0],
         ["Angry Cows","US","bs",45,U+"594",1],
+        ["Exponentiation II","C","adv",35,C+"1713",1],
       ]],
       ["Vie",[
         ["Tasks and Deadlines","C","greedy",30,C+"1630",0],
@@ -192,6 +194,7 @@ const WEEKS = [
         ["Counting Towers","C","dp",60,C+"2413",0],
         ["Edit Distance","C","dp",45,C+"1639",0],
         ["Kayaking","CF","greedy",30,CF+"863/problem/B",0],
+        ["Counting Divisors","C","adv",30,C+"1081",1],
       ]],
       ["Mié",[
         ["Longest Common Subsequence","C","dp",50,C+"1746",0],
@@ -242,6 +245,7 @@ const WEEKS = [
         ["Subarray Divisibility","C","sort",45,C+"1662",0],
         ["Distinct Values Subarrays II","C","sort",40,C+"2427",0],
         ["Made Up","CF","sort",35,"https://atcoder.jp/contests/abc202/tasks/abc202_c",0],
+        ["Binomial Coefficients","C","adv",40,C+"1079",1],
       ]],
       ["Vie",[
         ["Array Division","C","bs",45,C+"1085",0],
@@ -397,6 +401,7 @@ const WEEKS = [
       ]],
       ["Vie",[
         ["Forest Queries II","C","rq",55,C+"1739",0],
+        ["Kth Largest (Coord Compress + Segtree)","CF","rq",60,"https://codeforces.com/contest/1093/problem/G",1],
       ]],
       ["Sáb",[
         ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
@@ -428,6 +433,7 @@ const WEEKS = [
       ]],
       ["Vie",[
         ["Movie Festival Queries","C","rq",50,C+"1740",0],
+        ["Emergency Rations (Regional 2025 - E)","CF","rq",90,"https://codeforces.com/gym/106178/problem/E",1],
       ]],
       ["Sáb",[
         ["🏆 CONTEST con equipo","CT","contest",180,"",0],
