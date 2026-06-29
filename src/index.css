@@ -850,6 +850,21 @@
     border-bottom: 1px dashed var(--line);
   }
 
+  .block-theory { border-left: 4px solid var(--sky); }
+  .block-speed { border-left: 4px solid var(--gold); }
+  .block-team { border-left: 4px solid var(--coral); }
+  .block-upsolving { border-left: 4px solid var(--grape); }
+
+  .backlog-prob {
+    border-left: 2px dashed var(--gold);
+    background: rgba(251, 191, 36, 0.05);
+  }
+  
+  .backlog-tag {
+    background: var(--gold);
+    color: #000;
+  }
+
   .day-name {
     font-family: var(--font-pixel);
     font-size: 11px;
