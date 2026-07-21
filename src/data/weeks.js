@@ -174,378 +174,385 @@ export const WEEKS = [
     ]
   },
   {
-    id:5, title:"Interleaving III: Euler + DP Intervalos + Sliding Window", dates:"Jul 20–26", phase:"vac", tech:"mixed",
-    focus:"Caminos Eulerianos, DP de intervalos y subsets, primeras ventanas deslizantes.",
+    id:5, title:"DP Foundation", dates:"Jul 20–26", phase:"vac", tech:"dp",
+    focus:"DP lineal, grid, string. Regla: escribir la recurrencia en papel ANTES de codear cada problema.",
     days:[
       ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
+        ["Coin Combinations II","C","dp",40,C+"1636",0],
+        ["Removing Digits","C","dp",30,C+"1637",0],
+        ["Grid Paths I","C","dp",45,C+"1638",0],
       ]],
       ["Lun",[
-        ["De Bruijn Sequence","C","graph",50,C+"1692",0],
-        ["Rectangle Cutting","C","dp",45,C+"1744",0],
-        ["Prefix Sum Queries","C","rq",55,C+"2166",0],
-        ["Swapity Swap","U","impl",40,U+"1013",1],
+        ["Book Shop","C","dp",50,C+"1158",0],
+        ["Array Description","C","dp",55,C+"1746",0],
+        ["Hoof Paper Scissors","US","dp",40,U+"691",0],
       ]],
       ["Mar",[
-        ["Teleporters Path","C","graph",55,C+"1693",0],
-        ["Money Sums","C","dp",40,C+"1745",0],
-        ["Pizzeria Queries","C","rq",60,C+"2206",0],
-        ["The Great Revegetation","U","impl",35,U+"916",1],
-      ]],
-      ["Mié",[
-        ["Hamiltonian Flights","C","dp",65,C+"1690",0],
-        ["Removal Game","C","dp",55,C+"1097",0],
-        ["Subarray Sum Queries","C","rq",50,C+"1190",0],
-        ["Sleepy Cow Herding","U","impl",30,U+"915",0],
-      ]],
-      ["Jue",[
-        ["Knight's Tour","C","graph",60,C+"1689",0],
-        ["Two Sets II","C","dp",50,C+"1093",0],
-        ["Distinct Values Queries","C","rq",55,C+"1734",0],
-        ["Where Am I?","U","sort",30,U+"964",1],
-      ]],
-      ["Vie",[
-        ["Download Speed","C","flow",70,C+"1694",0],
-        ["Mountain Range","C","dp",60,C+"1743",0],
-        ["Forest Queries II","C","rq",55,C+"1739",0],
-        ["Year of the Cow","U","sort",35,U+"1107",0],
-      ]],
-      ["Sáb",[
-        ["🏆 CONTEST con equipo / Virtual","CT","contest",180,"",0],
-      ]]
-    ]
-  },
-  {
-    id:6, title:"Interleaving IV: Flujo + DP Avanzado + RQ Avanzado", dates:"Jul 27 – Ago 2", phase:"vac", tech:"mixed",
-    focus:"Flujo máximo, DP bitmask y conteo, Range Queries avanzados. Última semana de vacaciones.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Lun",[
-        ["Police Chase","C","flow",60,C+"1695",0],
-        ["Increasing Subsequence","C","dp",45,C+"1145",0],
-        ["Range Updates and Sums","C","rq",70,C+"1735",0],
-        ["Collecting Numbers","C","sort",30,C+"2216",0],
-      ]],
-      ["Mar",[
-        ["School Dance","C","flow",50,C+"1696",0],
-        ["Projects","C","dp",55,C+"1140",0],
-        ["Polynomial Queries","C","rq",60,C+"1736",0],
-        ["Playlist","C","sort",35,C+"1141",0],
-      ]],
-      ["Mié",[
-        ["Distinct Routes","C","flow",60,C+"1711",0],
-        ["Elevator Rides","C","dp",70,C+"1653",0],
-        ["Range Queries and Copies","C","rq",65,C+"1737",0],
-        ["Towers","C","sort",30,C+"1073",0],
-      ]],
-      ["Jue",[
-        ["Subordinates","C","tree",30,C+"1674",0],
-        ["Counting Tilings","C","dp",65,C+"2181",0],
-        ["Missing Coin Sum Queries","C","rq",60,C+"2432",0],
-        ["Traffic Lights","C","sort",40,C+"1163",0],
-      ]],
-      ["Vie",[
-        ["Tree Matching","C","tree",55,C+"1130",0],
-        ["Counting Numbers","C","dp",60,C+"2220",0],
-        ["Movie Festival Queries","C","rq",50,C+"1740",0],
-        ["Nearest Smaller Values","C","sort",25,C+"1645",0],
-      ]],
-      ["Sáb",[
-        ["🏆 SIMULACRO ICPC con equipo (5hrs)","CT","contest",300,"",0],
-      ]]
-    ]
-  },
-  {
-    id:7, title:"Interleaving V: Árboles + DP Final + RQ Avanzado", dates:"Ago 3–9", phase:"sem", tech:"mixed",
-    focus:"Diámetro y distancias en árboles, últimos DPs, Range Queries avanzados.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Lun",[
-        ["Tree Diameter","C","tree",45,C+"1131",0],
-        ["Increasing Subsequence II","C","dp",55,C+"1748",0],
-        ["Don't Be Last!","U","sort",30,U+"687",1],
-      ]],
-      ["Mar",[
-        ["Tree Distances I","C","tree",50,C+"1132",0],
-        ["Hoof Paper Scissors","U","dp",40,U+"691",0],
-        ["Social Distancing I","U","greedy",35,U+"1035",0],
-      ]],
-      ["Mié",[
-        ["Tree Distances II","C","tree",55,C+"1133",0],
-        ["Sliding Window Sum","C","slide",25,C+"2424",0],
-        ["Leaders","U","impl",40,U+"1275",0],
-      ]],
-      ["Jue",[
-        ["Company Queries I","C","tree",50,C+"1687",0],
-        ["Sliding Window Minimum","C","slide",35,C+"2425",0],
-        ["Room Allocation","C","greedy",45,C+"1164",0],
-      ]],
-      ["Vie",[
-        ["Company Queries II","C","tree",55,C+"1688",0],
-        ["Sliding Window Xor","C","slide",30,C+"2426",0],
-        ["Factory Machines","C","bs",40,C+"1620",0],
-      ]],
-      ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
-    ]
-  },
-  {
-    id:8, title:"Interleaving VI: LCA + Queries en Árbol", dates:"Ago 10–16", phase:"sem", tech:"mixed",
-    focus:"Binary Lifting, Euler Tour, Subtree/Path Queries. Combinar árboles con Segment Trees.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Lun",[
-        ["Distance Queries","C","tree",55,C+"1135",0],
-        ["Sliding Window Distinct Values","C","slide",40,C+"2428",0],
-        ["Collecting Numbers II","C","sort",50,C+"2217",0],
-      ]],
-      ["Mar",[
-        ["Counting Paths","C","tree",60,C+"1136",0],
-        ["Sliding Window Median","C","slide",55,C+"1076",0],
-        ["Josephus Problem II","C","sort",55,C+"2163",0],
-      ]],
-      ["Mié",[
-        ["Subtree Queries","C","tree",55,C+"1137",0],
-        ["Sliding Window Cost","C","slide",50,C+"1077",0],
-        ["Nested Ranges Check","C","sort",55,C+"2168",0],
-      ]],
-      ["Jue",[
-        ["Path Queries","C","tree",55,C+"1138",0],
-        ["Sliding Window Inversions","C","slide",55,C+"2430",0],
-        ["Nested Ranges Count","C","sort",60,C+"2169",0],
-      ]],
-      ["Vie",[
-        ["Path Queries II","C","tree",80,C+"2134",0],
-        ["Cities & States","U","sort",40,U+"667",0],
-        ["Tasks and Deadlines","C","greedy",30,C+"1630",0],
-      ]],
-      ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
-    ]
-  },
-  {
-    id:9, title:"Interleaving VII: Tree Avanzado + Sorting Final", dates:"Ago 17–23", phase:"sem", tech:"mixed",
-    focus:"Centroid Decomposition, Fixed-Length Paths. Sorting avanzado y subarrays.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Lun",[
-        ["Distinct Colors","C","tree",60,C+"1139",0],
-        ["Reading Books","C","greedy",25,C+"1631",0],
-        ["Subarray Sums I","C","sort",30,C+"1660",0],
-      ]],
-      ["Mar",[
-        ["Finding a Centroid","C","tree",50,C+"2079",0],
-        ["Angry Cows","U","bs",45,U+"594",1],
-        ["Cow College","U","greedy",40,U+"1251",0],
-      ]],
-      ["Mié",[
-        ["Fixed-Length Paths I","C","tree",70,C+"2080",0],
-        ["Fence Painting","U","impl",25,U+"567",0],
-        ["Subarray Sums II","C","sort",40,C+"1661",0],
-      ]],
-      ["Jue",[
-        ["Fixed-Length Paths II","C","tree",80,C+"2081",0],
-        ["Subarray Divisibility","C","sort",45,C+"1662",0],
-        ["Sum of Three Values","C","sort",50,C+"1641",0],
-      ]],
-      ["Vie",[
-        ["Sum of Four Values","C","sort",55,C+"1642",0],
-        ["Distinct Values Subarrays II","C","sort",40,C+"2427",0],
-        ["Array Division","C","bs",45,C+"1085",0],
-      ]],
-      ["Sáb",[
-        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-      ]]
-    ]
-  },
-  {
-    id:10, title:"Interleaving VIII: Greedy + Binary Search + Math", dates:"Ago 24–30", phase:"sem", tech:"mixed",
-    focus:"Greedy clásicos, Binary Search paramétrico, fundamentos de matemáticas.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Lun",[
-        ["Movie Festival II","C","greedy",50,C+"1632",0],
-        ["Maximum Subarray Sum II","C","sort",55,C+"1644",0],
-        ["Out of Place","U","greedy",35,U+"785",1],
-      ]],
-      ["Mar",[
-        ["Exponentiation","C","adv",30,C+"1712",1],
-        ["Exponentiation II","C","adv",35,C+"1713",1],
+        ["Counting Towers","C","dp",60,C+"2413",0],
+        ["Edit Distance","C","dp",45,C+"1639",0],
+        ["Kayaking","CF","greedy",30,CF+"863/problem/B",0],
         ["Counting Divisors","C","adv",30,C+"1081",1],
       ]],
       ["Mié",[
-        ["Binomial Coefficients","C","adv",40,C+"1079",1],
-        ["Kayaking","CF","greedy",30,CF+"863/problem/B",0],
-        ["Word Combinations","C","str",55,C+"1731",0],
+        ["Longest Common Subsequence","C","dp",50,C+"3403",0],
+        ["Rectangle Cutting","C","dp",45,C+"1744",0],
+        ["Playing in a Casino","CF","sort",30,CF+"1808/problem/B",0],
       ]],
       ["Jue",[
-        ["String Matching","C","str",35,C+"1753",0],
-        ["Finding Borders","C","str",50,C+"1732",0],
-        ["Finding Periods","C","str",50,C+"1733",0],
+        ["Money Sums","C","dp",40,C+"1745",0],
+        ["Removal Game","C","dp",55,C+"1097",0],
+        ["Why Did the Cow Cross the Road III","UB","sort",35,U+"713",0],
       ]],
       ["Vie",[
-        ["Playing in a Casino","CF","sort",30,CF+"1808/problem/B",0],
-        ["It's Mooin' Time","U","sort",35,U+"1445",0],
-        ["Counting Liars","U","bs",30,U+"1228",0],
+        ["Two Sets II","C","dp",50,C+"1093",0],
+        ["Minimal Grid Path","C","dp",70,C+"3359",0],
+        ["Sum of Three Values","C","sort",50,C+"1641",0],
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",180,"",0],
+        ["Upsolving 2 problemas","CF","mixed",80,"",0],
+      ]],
     ]
   },
   {
-    id:11, title:"Interleaving IX: Strings Fundamentos", dates:"Ago 31 – Sep 6", phase:"sem", tech:"mixed",
-    focus:"KMP, borders, periods, Word Combinations. Fundamentos de string algorithms.",
+    id:6, title:"DP Intermedio + USACO Gold DP", dates:"Jul 27 – Ago 2", phase:"sem", tech:"dp",
+    focus:"Bitmask DP, digit DP y LIS. Inicio de clases: carga de semestre desde el 27 de julio.",
     days:[
       ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
+        ["Increasing Subsequence","C","dp",45,C+"1145",0],
+        ["Projects","C","dp",55,C+"1140",0],
+        ["Mountain Range","C","dp",60,C+"1743",0],
       ]],
       ["Lun",[
-        ["Bovine Genomics","U","impl",30,U+"736",1],
-        ["Triangles","U","geo",35,U+"1011",0],
+        ["Elevator Rides","C","dp",70,C+"1653",0],
+        ["Counting Tilings","C","dp",65,C+"2181",0],
+        ["Out of Place","UB","greedy",35,U+"785",1],
       ]],
       ["Mar",[
-        ["Guess the Animal","U","impl",35,U+"893",0],
+        ["Counting Numbers","C","dp",60,C+"2220",0],
+        ["Increasing Subsequence II","C","dp",55,C+"1748",0],
+        ["It's Mooin' Time","UB","sort",35,U+"1445",0],
+      ]],
+      ["Mié",[
+        ["Sum of Four Values","C","sort",55,C+"1642",0],
+        ["Subarray Sums II","C","sort",45,C+"1661",0],
+        ["Into Blocks","CF","dsu",40,CF+"1209/problem/G1",0],
+      ]],
+      ["Jue",[
+        ["Subarray Divisibility","C","sort",45,C+"1662",0],
+        ["Distinct Values Subarrays II","C","sort",40,C+"2427",0],
+        ["Made Up","CF","sort",35,"https://atcoder.jp/contests/abc202/tasks/abc202_c",0],
+        ["Binomial Coefficients","C","adv",40,C+"1079",1],
+      ]],
+      ["Vie",[
+        ["Array Division","C","bs",45,C+"1085",0],
+        ["Movie Festival II","C","greedy",50,C+"1632",0],
+        ["Maximum Subarray Sum II","C","sort",55,C+"1644",0],
+      ]],
+      ["Sáb",[
+        ["🏆 SIMULACRO ICPC con equipo (5hrs)","CT","contest",300,"",0],
+        ["Post-mortem + análisis","CT","mixed",60,"",0],
+      ]],
+    ]
+  },
+  // ===== SEMESTER PHASE: 2-3hrs weekdays, 4-5hrs weekends =====
+  {
+    id:7, title:"Árboles Foundation", dates:"Ago 3–9", phase:"sem", tech:"tree",
+    focus:"Tree DP, diámetro, distancias. Cambio de ritmo: 1-2 problemas entre semana, 2-3 fines de semana.",
+    days:[
+      ["Dom",[
+        ["Tree Matching","C","tree",55,C+"1130",0],
+        ["Tree Diameter","C","tree",45,C+"1131",0],
+      ]],
+      ["Lun",[
+        ["Tree Distances I","C","tree",50,C+"1132",0],
+      ]],
+      ["Mar",[
+        ["Tree Distances II","C","tree",55,C+"1133",0],
+      ]],
+      ["Mié",[
+        ["Counting Liars","UB","bs",30,U+"1228",0],
+        ["Bovine Genomics","UB","impl",30,U+"736",1],
+      ]],
+      ["Jue",[
+        ["Company Queries I","C","tree",50,C+"1687",0],
+      ]],
+      ["Vie",[
+        ["Company Queries II","C","tree",55,C+"1688",0],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
+        ["Upsolving","CF","mixed",40,"",0],
+      ]],
+    ]
+  },
+  {
+    id:8, title:"Árboles: LCA, Euler Tour, Queries", dates:"Ago 10–16", phase:"sem", tech:"tree",
+    focus:"Binary lifting, Euler tour para convertir problemas de árboles en problemas de rangos.",
+    days:[
+      ["Dom",[
+        ["Distance Queries","C","tree",55,C+"1135",0],
+        ["Counting Paths","C","tree",60,C+"1136",0],
+      ]],
+      ["Lun",[
+        ["Subtree Queries","C","tree",55,C+"1137",0],
+      ]],
+      ["Mar",[
+        ["Path Queries","C","tree",55,C+"1138",0],
+      ]],
+      ["Mié",[
+        ["Distinct Colors","C","tree",60,C+"1139",0],
+      ]],
+      ["Jue",[
+        ["Finding a Centroid","C","tree",50,C+"2079",0],
+      ]],
+      ["Vie",[
+        ["Triangles","UB","geo",35,U+"1011",0],
+        ["Guess the Animal","UB","impl",35,U+"893",0],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
+        ["Upsolving","CT","mixed",60,"",0],
+      ]],
+    ]
+  },
+  {
+    id:9, title:"Árboles Avanzados + Functional Graphs", dates:"Ago 17–23", phase:"sem", tech:"func",
+    focus:"Path Queries II (HLD/Segtree en árbol), Fixed-Length Paths, Planets Queries II.",
+    days:[
+      ["Dom",[
+        ["Path Queries II","C","tree",80,C+"2134",0],
+        ["Fixed-Length Paths I","C","tree",70,C+"2080",0],
+      ]],
+      ["Lun",[
+        ["Planets Queries II","C","func",65,C+"1160",0],
+      ]],
+      ["Mar",[
+        ["Knight's Tour","C","graph",60,C+"1689",0],
+      ]],
+      ["Mié",[
+        ["Lifeguards","US","greedy",40,U+"786",0],
+        ["Photoshoot","UB","greedy",35,U+"1227",1],
+      ]],
+      ["Jue",[
+        ["Fixed-Length Paths II","C","tree",80,C+"2081",0],
+      ]],
+      ["Vie",[
+        ["Sliding Window Median","C","slide",55,C+"1076",0],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
+        ["Upsolving","CF","mixed",40,"",0],
+      ]],
+    ]
+  },
+  {
+    id:10, title:"Range Queries Foundation", dates:"Ago 24–30", phase:"sem", tech:"rq",
+    focus:"Segment Tree iterativo/recursivo, Fenwick. Debe salirte el Segtree en 10 minutos de memoria.",
+    days:[
+      ["Dom",[
+        ["Dynamic Range Minimum Queries","C","rq",40,C+"1649",0],
+        ["Range Xor Queries","C","rq",35,C+"1650",0],
+        ["Range Update Queries","C","rq",45,C+"1651",0],
+      ]],
+      ["Lun",[
+        ["Forest Queries","C","rq",40,C+"1652",0],
+      ]],
+      ["Mar",[
+        ["Hotel Queries","C","rq",55,C+"1143",0],
+      ]],
+      ["Mié",[
+        ["List Removals","C","rq",50,C+"1749",0],
+      ]],
+      ["Jue",[
+        ["Salary Queries","C","rq",60,C+"1144",0],
+      ]],
+      ["Vie",[
+        ["Load Balancing","UB","sort",40,U+"617",1],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
+        ["Upsolving","CT","mixed",60,"",0],
+      ]],
+    ]
+  },
+  {
+    id:11, title:"Range Queries Advanced + Lazy", dates:"Ago 31 – Sep 6", phase:"sem", tech:"rq",
+    focus:"Lazy propagation, 2D queries, problemas combinados. Template de Segtree+Lazy propio.",
+    days:[
+      ["Dom",[
+        ["Prefix Sum Queries","C","rq",55,C+"2166",0],
+        ["Pizzeria Queries","C","rq",60,C+"2206",0],
+      ]],
+      ["Lun",[
+        ["Subarray Sum Queries","C","rq",50,C+"1190",0],
+      ]],
+      ["Mar",[
+        ["Distinct Values Queries","C","rq",55,C+"1734",0],
+      ]],
+      ["Mié",[
+        ["Range Updates and Sums","C","rq",70,C+"1735",0],
+      ]],
+      ["Jue",[
+        ["Polynomial Queries","C","rq",60,C+"1736",0],
+      ]],
+      ["Vie",[
+        ["Forest Queries II","C","rq",55,C+"1739",0],
+        ["Kth Largest (Coord Compress + Segtree)","CF","rq",60,"https://codeforces.com/contest/1093/problem/G",1],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
+        ["Upsolving","CF","mixed",40,"",0],
+      ]],
+    ]
+  },
+  {
+    id:12, title:"Range Queries Pro + Sliding Window", dates:"Sep 7–13", phase:"sem", tech:"slide",
+    focus:"Queries más difíciles de CSES + la sección Sliding Window completa.",
+    days:[
+      ["Dom",[
+        ["Range Queries and Copies","C","rq",65,C+"1737",0],
+        ["Missing Coin Sum Queries","C","rq",60,C+"2432",0],
+      ]],
+      ["Lun",[
+        ["Sliding Window Sum","C","slide",25,C+"2424",0],
+        ["Sliding Window Minimum","C","slide",35,C+"2425",0],
+      ]],
+      ["Mar",[
+        ["Sliding Window Xor","C","slide",30,C+"2426",0],
+        ["Sliding Window Distinct Values","C","slide",40,C+"2428",0],
+      ]],
+      ["Mié",[
+        ["Sliding Window Cost","C","slide",50,C+"1077",0],
+      ]],
+      ["Jue",[
+        ["Sliding Window Inversions","C","slide",55,C+"2430",0],
+      ]],
+      ["Vie",[
+        ["Movie Festival Queries","C","rq",50,C+"1740",0],
+        ["Emergency Rations (Regional 2025 - E)","CF","rq",90,"https://codeforces.com/gym/106178/problem/E",1],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
+        ["Upsolving","CT","mixed",60,"",0],
+      ]],
+    ]
+  },
+  {
+    id:13, title:"String Algorithms", dates:"Sep 14–20", phase:"sem", tech:"str",
+    focus:"Hashing, KMP, borders, periods. String hashing como herramienta universal O(1) substring compare.",
+    days:[
+      ["Dom",[
+        ["Word Combinations","C","str",55,C+"1731",0],
+        ["Finding Borders","C","str",50,C+"1732",0],
+      ]],
+      ["Lun",[
+        ["Finding Periods","C","str",50,C+"1733",0],
+      ]],
+      ["Mar",[
         ["Minimal Rotation","C","str",55,C+"1110",0],
       ]],
       ["Mié",[
         ["Longest Palindrome","C","str",55,C+"1111",0],
-        ["Palindrome Queries","C","str",60,C+"2420",0],
       ]],
       ["Jue",[
-        ["Finding Patterns","C","str",50,C+"2102",0],
-        ["Counting Patterns","C","str",55,C+"2103",0],
+        ["Palindrome Queries","C","str",60,C+"2420",0],
       ]],
       ["Vie",[
-        ["Lifeguards","U","greedy",40,U+"786",0],
-        ["Photoshoot","U","greedy",35,U+"1227",1],
+        ["Finding Patterns","C","str",50,C+"2102",0],
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
+        ["Upsolving","CF","mixed",40,"",0],
+      ]],
     ]
   },
   {
-    id:12, title:"Interleaving X: Strings Avanzado + Geometry", dates:"Sep 7–13", phase:"sem", tech:"mixed",
-    focus:"Rotación mínima, palíndromos, geometría computacional básica.",
+    id:14, title:"Strings Avanzados + Geometry gaps", dates:"Sep 21–27", phase:"sem", tech:"geo",
+    focus:"Suffix arrays conceptos, Aho-Corasick intro, cerrar geometry gaps.",
     days:[
       ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Lun",[
-        ["Load Balancing","U","sort",40,U+"617",1],
-        ["Polygon Lattice Points","C","geo",40,C+"2193",0],
-      ]],
-      ["Mar",[
-        ["Minimum Euclidean Distance","C","geo",50,C+"2194",0],
+        ["Counting Patterns","C","str",55,C+"2103",0],
         ["Distinct Substrings","C","str",60,C+"2104",0],
       ]],
-      ["Mié",[
+      ["Lun",[
         ["Pattern Positions","C","str",55,C+"2105",0],
+      ]],
+      ["Mar",[
         ["Repeating Substring","C","str",50,C+"2106",0],
+      ]],
+      ["Mié",[
+        ["Polygon Lattice Points","C","geo",40,C+"2193",0],
+        ["Minimum Euclidean Distance","C","geo",50,C+"2194",0],
       ]],
       ["Jue",[
         ["Convex Hull","C","geo",55,C+"2195",0],
-        ["Sleeping in Class","U","greedy",35,U+"1203",1],
       ]],
       ["Vie",[
-        ["Blocked Billboard II","U","geo",35,U+"783",1],
-        ["Meet in the Middle","C","adv",60,C+"1628",0],
+        ["Sleeping in Class","UB","greedy",35,U+"1203",1],
+        ["Blocked Billboard II","UB","geo",35,U+"783",1],
       ]],
       ["Sáb",[
         ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-      ]]
+        ["Upsolving","CT","mixed",60,"",0],
+      ]],
     ]
   },
   {
-    id:13, title:"Interleaving XI: Geometry + Advanced Techniques", dates:"Sep 14–20", phase:"sem", tech:"mixed",
-    focus:"Convex Hull, Meet in the Middle, Counting Bits. Técnicas avanzadas.",
+    id:15, title:"Advanced Techniques + Bitwise", dates:"Sep 28 – Oct 4", phase:"sem", tech:"adv",
+    focus:"Meet in the Middle, SOS DP, bitwise tricks. Problemas de Advanced Techniques de CSES.",
     days:[
       ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
+        ["Meet in the Middle","C","adv",60,C+"1628",0],
+        ["Counting Bits","C","adv",40,C+"2419",0],
       ]],
       ["Lun",[
-        ["Counting Bits","C","adv",40,C+"2419",0],
         ["Maximum Xor Subarray","C","adv",55,C+"1655",0],
       ]],
       ["Mar",[
-        ["Why Did the Cow Cross the Road III","U","sort",35,U+"713",0],
         ["Reachable Nodes","C","adv",50,C+"2138",0],
       ]],
       ["Mié",[
         ["Reachability Queries","C","adv",50,C+"2139",0],
-        ["Necessary Roads","C","adv",55,C+"2177",0],
       ]],
       ["Jue",[
-        ["Necessary Cities","C","adv",50,C+"2178",0],
-        ["Into Blocks","CF","dsu",40,CF+"1209/problem/G1",0],
+        ["Necessary Roads","C","adv",55,C+"2177",0],
       ]],
       ["Vie",[
+        ["Necessary Cities","C","adv",50,C+"2178",0],
+      ]],
+      ["Sáb",[
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
+        ["Upsolving","CF","mixed",40,"",0],
+      ]],
+    ]
+  },
+  {
+    id:16, title:"Problemas Mixtos Rating 1600–2000", dates:"Oct 5–11", phase:"sem", tech:"impl",
+    focus:"Ya no por categoría sino por habilidad: leer, identificar técnica, implementar limpio y rápido.",
+    days:[
+      ["Dom",[
         ["D. Dijkstra?","CF","graph",60,CF+"20/problem/D",0],
         ["E. Tree Painting","CF","tree",60,CF+"1187/problem/E",0],
       ]],
-      ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
-    ]
-  },
-  {
-    id:14, title:"Interleaving XII: Advanced + CF Mixed 1600-2000", dates:"Sep 21–27", phase:"sem", tech:"mixed",
-    focus:"Reachability, Necessary Roads/Cities, problemas mixtos de Codeforces.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
       ["Lun",[
         ["D. Journey","CF","dp",55,CF+"1472/problem/D",0],
-        ["E. Minimal Segment Cover","CF","rq",60,CF+"1175/problem/E",0],
       ]],
       ["Mar",[
-        ["C. Ski Base","CF","greedy",50,CF+"913/problem/C",0],
-        ["E. Almost Shortest Path","CF","sp",65,CF+"843/problem/D",0],
+        ["E. Minimal Segment Cover","CF","rq",60,CF+"1175/problem/E",0],
       ]],
       ["Mié",[
+        ["C. Ski Base","CF","greedy",50,CF+"913/problem/C",0],
+      ]],
+      ["Jue",[
+        ["E. Almost Shortest Path","CF","sp",65,CF+"843/problem/D",0],
+      ]],
+      ["Vie",[
         ["D. Prefix-Suffix Palindrome","CF","str",55,CF+"1326/problem/D2",0],
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
-    ]
-  },
-  {
-    id:15, title:"Interleaving XIII: CF Mixed Avanzado", dates:"Sep 28 – Oct 4", phase:"sem", tech:"mixed",
-    focus:"Problemas mixtos de CF para practicar identificación de técnicas bajo presión.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
+        ["🏆 SIMULACRO ICPC con equipo (5hrs)","CT","contest",300,"",0],
       ]],
-      ["Sáb",[
-        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-      ]]
-    ]
-  },
-  {
-    id:16, title:"Interleaving XIV: Cierre Pre-Simulacros", dates:"Oct 5–11", phase:"sem", tech:"mixed",
-    focus:"Últimos problemas mixtos. Transición hacia la fase de simulacros.",
-    days:[
-      ["Dom",[
-        ["Upsolving y Backlog semanal","CT","mixed",120,"",0],
-      ]],
-      ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,CF+"",0],
-      ]]
     ]
   },
   {

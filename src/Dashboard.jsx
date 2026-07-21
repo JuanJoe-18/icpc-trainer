@@ -5,6 +5,11 @@ import {
   LineChart, Line, AreaChart, Area
 } from "recharts";
 
+const problemKey = (problem) => {
+  const [name, source, , , url] = problem;
+  return `problem:${source}:${url || name.trim().toLowerCase()}`;
+};
+
 const TECH_COLORS = {
   impl:"#94a3b8", graph:"#00e5a0", sp:"#00e5a0", topo:"#00e5a0", scc:"#00e5a0",
   func:"#00e5a0", dsu:"#00e5a0", flow:"#38bdf8", dp:"#ff6b6b", tree:"#ffd43b",
@@ -27,7 +32,7 @@ export default function Dashboard({ weeks, checked }) {
       if (["mixed", "contest"].includes(tech)) return;
       if (!stats[tech]) stats[tech] = { total: 0, done: 0, practicing: 0 };
       stats[tech].total++;
-      const st = checked[`${wi}-${di}-${pi}`] || 0;
+      const st = checked[problemKey(p)] || 0;
       if (st >= 2) stats[tech].done++;
       if (st === 1) stats[tech].practicing++;
     })));
@@ -51,7 +56,7 @@ export default function Dashboard({ weeks, checked }) {
       let total = 0, done = 0, practicing = 0;
       wk.days.forEach((d, di) => d[1].forEach((p, pi) => {
         total++;
-        const st = checked[`${wi}-${di}-${pi}`] || 0;
+        const st = checked[problemKey(p)] || 0;
         if (st >= 2) done++;
         if (st === 1) practicing++;
       }));
@@ -71,7 +76,7 @@ export default function Dashboard({ weeks, checked }) {
     return weeks.map((wk, wi) => {
       let weekDone = 0;
       wk.days.forEach((d, di) => d[1].forEach((p, pi) => {
-        const st = checked[`${wi}-${di}-${pi}`] || 0;
+        const st = checked[problemKey(p)] || 0;
         if (st >= 2) weekDone++;
       }));
       cumulative += weekDone;
@@ -86,7 +91,7 @@ export default function Dashboard({ weeks, checked }) {
   const platformData = useMemo(() => {
     const stats = { CSES: 0, USACO: 0, CF: 0, Equipo: 0 };
     weeks.forEach((wk, wi) => wk.days.forEach((d, di) => d[1].forEach((p, pi) => {
-      const st = checked[`${wi}-${di}-${pi}`] || 0;
+      const st = checked[problemKey(p)] || 0;
       if (st < 2) return;
       if (p[1] === "C") stats.CSES++;
       else if (p[1].startsWith("U")) stats.USACO++;
@@ -100,7 +105,7 @@ export default function Dashboard({ weeks, checked }) {
     let total = 0, done = 0, practicing = 0, reviewing = 0;
     weeks.forEach((wk, wi) => wk.days.forEach((d, di) => d[1].forEach((p, pi) => {
       total++;
-      const st = checked[`${wi}-${di}-${pi}`] || 0;
+      const st = checked[problemKey(p)] || 0;
       if (st >= 2) done++;
       if (st === 1) practicing++;
       if (st === 3) reviewing++;

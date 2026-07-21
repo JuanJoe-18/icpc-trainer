@@ -80,6 +80,24 @@ const GIFS = {
 
 const STORAGE_KEY = "icpc-training-progress";
 
+const problemKey = (problem) => {
+  const [name, source, , , url] = problem;
+  const identity = url || name.trim().toLowerCase();
+  return `problem:${source}:${identity}`;
+};
+
+function migrateProgress(data) {
+  const migrated = Object.fromEntries(
+    Object.entries(data).filter(([key]) => key.startsWith("problem:"))
+  );
+  WEEKS.forEach((week, wi) => week.days.forEach((day, di) => day[1].forEach((problem, pi) => {
+    const legacyStatus = data[`${wi}-${di}-${pi}`] || 0;
+    const stableKey = problemKey(problem);
+    if (legacyStatus > (migrated[stableKey] || 0)) migrated[stableKey] = legacyStatus;
+  })));
+  return migrated;
+}
+
 export const ICONS = {
   "dp": `<rect x="3.5" y="3.5" width="17" height="17" rx="1.5"/><path d="M3.5 9.5h17M3.5 15.5h17M9.5 3.5v17M15.5 3.5v17"/><rect x="3.5" y="3.5" width="6" height="6" rx="1" fill="currentColor" stroke="none"/>`,
   "impl": `<path d="M8 5l-5 7 5 7M16 5l5 7-5 7M13.5 4l-3 16"/>`,
@@ -135,7 +153,7 @@ const STATUS = {
 function loadProgress() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
+    return raw ? migrateProgress(JSON.parse(raw)) : {};
   } catch { return {}; }
 }
 
@@ -164,12 +182,12 @@ export default function Planner() {
 
   const w = WEEKS[weekIdx];
   const pi = PHASE_INFO[w.phase];
-  const toggleCheck = (dayI, probI) => {
-    const k = `${weekIdx}-${dayI}-${probI}`;
-    setChecked(p => {
-      const current = p[k] || 0;
+  const toggleCheck = (problem) => {
+    const key = problemKey(problem);
+    setChecked(previous => {
+      const current = previous[key] || 0;
       const next = (current + 1) % 4;
-      return { ...p, [k]: next };
+      return { ...previous, [key]: next };
     });
   };
 
@@ -181,7 +199,7 @@ export default function Planner() {
           total++;
           mins += p[3];
           if (p[5]) starred++;
-          const st = checked[`${wi}-${di}-${pi}`] || 0;
+          const st = checked[problemKey(p)] || 0;
           if (st >= 2) {
             done++;
             if (p[5]) starredDone++;
@@ -198,7 +216,7 @@ export default function Planner() {
     let total=0, done=0, cses=0, usaco=0, cf=0, starred=0, starredDone=0, practicing=0, reviewing=0;
     WEEKS.forEach((wk,wi) => wk.days.forEach((d,di) => d[1].forEach((p,pi) => {
       total++;
-      const st = checked[`${wi}-${di}-${pi}`] || 0;
+      const st = checked[problemKey(p)] || 0;
       if(st >= 2) done++;
       if(st === 1) practicing++;
       if(st === 3) reviewing++;
@@ -216,7 +234,7 @@ export default function Planner() {
       const tech = p[2];
       if (!stats[tech]) stats[tech] = { total:0, done:0 };
       stats[tech].total++;
-      const st = checked[`${wi}-${di}-${pi}`] || 0;
+      const st = checked[problemKey(p)] || 0;
       if (st >= 2) stats[tech].done++;
     })));
     return stats;
@@ -239,7 +257,7 @@ export default function Planner() {
     reader.onload = (ev) => {
       try {
         const data = JSON.parse(ev.target.result);
-        setChecked(data);
+        setChecked(migrateProgress(data));
       } catch { alert("Invalid file"); }
     };
     reader.readAsText(file);
@@ -248,7 +266,7 @@ export default function Planner() {
 
   const renderProblem = (p, di, piOriginalIdx, dow) => {
     const [name, src, tech, mins, url, starred] = p;
-    const status = checked[`${weekIdx}-${di}-${piOriginalIdx}`] || 0;
+    const status = checked[problemKey(p)] || 0;
     const isDone = status >= 2;
     
     let boxCls = "";
@@ -258,14 +276,14 @@ export default function Planner() {
     else if (status === 3) { boxCls = "s3"; boxContent = <Icon name="st-review"/>; }
 
     return (
-      <div key={`${di}-${piOriginalIdx}`} className={`prob ${isDone ? 'done' : ''} ${dow === 'Backlog' ? 'backlog-prob' : ''}`}>
-        <div className={`box ${boxCls}`} onClick={() => toggleCheck(di, piOriginalIdx)} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>{boxContent}</div>
+      <div key={`${dow}-${problemKey(p)}`} className={`prob ${isDone ? 'done' : ''} ${dow === 'Backlog' ? 'backlog-prob' : ''}`}>
+        <div className={`box ${boxCls}`} onClick={() => toggleCheck(p)} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>{boxContent}</div>
         <div className="star" style={{display:"flex",alignItems:"center",justifyContent:"center"}}>{starred === 1 ? <Icon name="st-star"/> : null}</div>
         <div className="name">
           {url ? <a href={url} target="_blank" rel="noopener noreferrer" style={{color:'inherit', textDecoration:'inherit'}}>{name}</a> : name}
         </div>
         <div className="tags">
-          {dow === 'Backlog' && <span className="tag backlog-tag">Backlog</span>}
+          {dow === 'Backlog' && <span className="tag backlog-tag">Arrastre</span>}
           <span className={`tag ${src==='C' ? 'src-cses' : src.startsWith('U') ? 'src-usaco' : src==='CF' ? 'src-cf' : 'tech g'}`}>{SRC_LABELS[src]}</span>
           <span className="tag tech">{TECH_LABELS[tech]}</span>
         </div>
@@ -286,22 +304,37 @@ export default function Planner() {
     return res;
   };
 
-  const theoryProblems = getFilteredProblems(['Lun', 'Mar', 'Mié', 'Jue']);
+  const mondayProblems = getFilteredProblems(['Lun']);
+  const tuesdayProblems = getFilteredProblems(['Mar']);
+  const wednesdayProblems = getFilteredProblems(['Mié']);
+  const thursdayProblems = getFilteredProblems(['Jue']);
   const speedProblems = getFilteredProblems(['Vie']);
   const teamProblems = getFilteredProblems(['Sáb']);
   const sundayProblems = getFilteredProblems(['Dom']);
   
-  const backlogProblems = [];
-  w.days.forEach(([dow, problems], di) => {
-    if (['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'].includes(dow)) {
+  const currentProblemKeys = new Set(
+    w.days.flatMap(([, problems]) => problems.map(problemKey))
+  );
+  const backlogByProblem = new Map();
+  WEEKS.slice(0, weekIdx).forEach((previousWeek, wi) => {
+    previousWeek.days.forEach(([dow, problems], di) => {
+      if (dow === 'Sáb') return;
       problems.forEach((p, pi) => {
-        const st = checked[`${weekIdx}-${di}-${pi}`] || 0;
-        if (st < 2) {
-          if (!filterStarred || p[5] === 1) backlogProblems.push({p, di, pi, dow: 'Backlog'});
+        if (['contest', 'mixed'].includes(p[2])) return;
+        const key = problemKey(p);
+        const status = checked[key] || 0;
+        if (status >= 2 || currentProblemKeys.has(key)) return;
+        if (!filterStarred || p[5] === 1) {
+          backlogByProblem.set(key, {p, wi, di, pi, dow:'Backlog', status});
         }
       });
-    }
+    });
   });
+  // Arrastre real de semanas anteriores: máximo dos problemas, sin duplicar
+  // los que ya aparecen en la semana actual.
+  const backlogProblems = [...backlogByProblem.values()]
+    .sort((a, b) => (b.wi - a.wi) || (b.status - a.status) || ((b.p[5] || 0) - (a.p[5] || 0)))
+    .slice(0, 2);
 
   const renderBlock = (title, blockClass, items) => {
     if (items.length === 0) return null;
@@ -438,8 +471,8 @@ export default function Planner() {
           </div>
           <div className="legend-row">
             <div className="phases">
-              <span className="ph-vac"><b>S1-6</b>Vacaciones</span>
-              <span className="ph-sem"><b>S7-16</b>Semestre</span>
+              <span className="ph-vac"><b>S1-5</b>Vacaciones</span>
+              <span className="ph-sem"><b>S6-16</b>Semestre</span>
               <span className="ph-sim"><b>S17-20</b>Simulacros</span>
             </div>
             <div className="tools">
@@ -477,10 +510,13 @@ export default function Planner() {
           </div>
 
           <div id="days">
-            {renderBlock("Lunes a Jueves (Teoría Condensada)", "theory", theoryProblems)}
-            {renderBlock("Viernes (Speed Implementation)", "speed", speedProblems)}
-            {renderBlock("Sábado (Regional en Equipo)", "team", teamProblems)}
-            {renderBlock("Domingo (Upsolving y Calibración)", "upsolving", [...sundayProblems, ...backlogProblems])}
+            {renderBlock("Lunes · Técnica principal + mantenimiento", "theory", mondayProblems)}
+            {renderBlock("Martes · Técnica principal + mantenimiento", "theory", tuesdayProblems)}
+            {renderBlock("Miércoles · Técnica principal + mantenimiento", "theory", wednesdayProblems)}
+            {renderBlock("Jueves · Técnica principal + mantenimiento", "theory", thursdayProblems)}
+            {renderBlock("Viernes (Recuperación activa)", "speed", speedProblems)}
+            {renderBlock("Sábado (Único contest semanal)", "team", teamProblems)}
+            {renderBlock("Domingo (Ligero · arrastre máximo 2)", "upsolving", [...sundayProblems, ...backlogProblems])}
           </div>
 
           <div className="panel">
