@@ -339,11 +339,15 @@ export default function Planner() {
   const renderBlock = (title, blockClass, items) => {
     if (items.length === 0) return null;
     const totalMins = items.reduce((sum, item) => sum + item.p[3], 0);
+    const starredMins = items.filter(item => item.p[5] === 1).reduce((sum, item) => sum + item.p[3], 0);
+    const minDisplay = (starredMins > 0 && starredMins < totalMins)
+      ? `${totalMins} min (⭐ ${starredMins}m base)`
+      : `${totalMins} min`;
     return (
       <div className={`day block-${blockClass}`}>
         <div className="day-head">
           <div className="day-name">{title}</div>
-          <div className="day-min">{totalMins} min</div>
+          <div className="day-min">{minDisplay}</div>
         </div>
         {items.map(item => renderProblem(item.p, item.di, item.pi, item.dow))}
       </div>
@@ -476,7 +480,7 @@ export default function Planner() {
               <span className="ph-sim"><b>S17-20</b>Simulacros</span>
             </div>
             <div className="tools">
-              <button className={`tool ${filterStarred ? 'on' : ''}`} onClick={() => setFilterStarred(!filterStarred)}>⭐ Solo Starred</button>
+              <button className={`tool ${filterStarred ? 'on' : ''}`} onClick={() => setFilterStarred(!filterStarred)}>⭐ Prioridad</button>
               <button className="tool" onClick={exportData}>💾 Export Sync</button>
               <label className="tool" style={{margin:0}}>📥 Import Sync<input type="file" accept=".json" onChange={importData} style={{display:"none"}}/></label>
             </div>

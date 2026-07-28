@@ -215,43 +215,34 @@ export const WEEKS = [
     ]
   },
   {
-    id:6, title:"DP Intermedio + USACO Gold DP", dates:"Jul 27 – Ago 2", phase:"sem", tech:"dp",
-    focus:"Bitmask DP, digit DP y LIS. Inicio de clases: carga de semestre desde el 27 de julio.",
+    id:6, title:"DP Intermedio + USACO Gold DP · Transición", dates:"Jul 27 – Ago 2", phase:"sem", tech:"dp",
+    focus:"Semestre en marcha: Lunes y Miércoles con carga alta (5 materias), por lo que tienen 1 problema base (⭐). Martes y Jueves sostienen el avance técnico.",
     days:[
       ["Dom",[
-        ["Increasing Subsequence","C","dp",45,C+"1145",0],
+        ["Increasing Subsequence","C","dp",45,C+"1145",1],
         ["Projects","C","dp",55,C+"1140",0],
-        ["Mountain Range","C","dp",60,C+"1743",0],
       ]],
       ["Lun",[
-        ["Elevator Rides","C","dp",70,C+"1653",0],
-        ["Counting Tilings","C","dp",65,C+"2181",0],
-        ["Out of Place","UB","greedy",35,U+"785",1],
+        ["Counting Numbers","C","dp",60,C+"2220",1],
       ]],
       ["Mar",[
-        ["Counting Numbers","C","dp",60,C+"2220",0],
-        ["Increasing Subsequence II","C","dp",55,C+"1748",0],
-        ["It's Mooin' Time","UB","sort",35,U+"1445",0],
+        ["Elevator Rides","C","dp",70,C+"1653",1],
+        ["Counting Tilings","C","dp",65,C+"2181",0],
       ]],
       ["Mié",[
-        ["Sum of Four Values","C","sort",55,C+"1642",0],
-        ["Subarray Sums II","C","sort",45,C+"1661",0],
-        ["Into Blocks","CF","dsu",40,CF+"1209/problem/G1",0],
+        ["Increasing Subsequence II","C","dp",55,C+"1748",1],
       ]],
       ["Jue",[
-        ["Subarray Divisibility","C","sort",45,C+"1662",0],
-        ["Distinct Values Subarrays II","C","sort",40,C+"2427",0],
-        ["Made Up","CF","sort",35,"https://atcoder.jp/contests/abc202/tasks/abc202_c",0],
-        ["Binomial Coefficients","C","adv",40,C+"1079",1],
+        ["Subarray Divisibility","C","sort",45,C+"1662",1],
+        ["It's Mooin' Time","UB","sort",35,U+"1445",0],
+        ["Mountain Range","C","dp",60,C+"1743",0],
       ]],
       ["Vie",[
-        ["Array Division","C","bs",45,C+"1085",0],
-        ["Movie Festival II","C","greedy",50,C+"1632",0],
-        ["Maximum Subarray Sum II","C","sort",55,C+"1644",0],
+        ["Out of Place","UB","greedy",35,U+"785",1],
       ]],
       ["Sáb",[
-        ["🏆 SIMULACRO ICPC con equipo (5hrs)","CT","contest",300,"",0],
-        ["Post-mortem + análisis","CT","mixed",60,"",0],
+        ["🏆 SIMULACRO ICPC con equipo (3hrs)","CT","contest",180,"",1],
+        ["Post-mortem + análisis","CT","mixed",45,"",1],
       ]],
     ]
   },
@@ -338,6 +329,7 @@ export const WEEKS = [
         ["Fixed-Length Paths II","C","tree",80,C+"2081",0],
       ]],
       ["Vie",[
+        ["Sum of Four Values","C","sort",55,C+"1642",0],
         ["Sliding Window Median","C","slide",55,C+"1076",0],
       ]],
       ["Sáb",[
@@ -351,6 +343,7 @@ export const WEEKS = [
     focus:"Segment Tree iterativo/recursivo, Fenwick. Debe salirte el Segtree en 10 minutos de memoria.",
     days:[
       ["Dom",[
+        ["Subarray Sums II","C","sort",45,C+"1661",0],
         ["Dynamic Range Minimum Queries","C","rq",40,C+"1649",0],
         ["Range Xor Queries","C","rq",35,C+"1650",0],
         ["Range Update Queries","C","rq",45,C+"1651",0],
@@ -397,6 +390,7 @@ export const WEEKS = [
         ["Polynomial Queries","C","rq",60,C+"1736",0],
       ]],
       ["Vie",[
+        ["Into Blocks","CF","dsu",40,CF+"1209/problem/G1",0],
         ["Forest Queries II","C","rq",55,C+"1739",0],
         ["Kth Largest (Coord Compress + Segtree)","CF","rq",60,"https://codeforces.com/contest/1093/problem/G",1],
       ]],
@@ -429,6 +423,7 @@ export const WEEKS = [
         ["Sliding Window Inversions","C","slide",55,C+"2430",0],
       ]],
       ["Vie",[
+        ["Distinct Values Subarrays II","C","sort",40,C+"2427",0],
         ["Movie Festival Queries","C","rq",50,C+"1740",0],
         ["Emergency Rations (Regional 2025 - E)","CF","rq",90,"https://codeforces.com/gym/106178/problem/E",1],
       ]],
@@ -459,6 +454,7 @@ export const WEEKS = [
         ["Palindrome Queries","C","str",60,C+"2420",0],
       ]],
       ["Vie",[
+        ["Made Up","CF","sort",35,"https://atcoder.jp/contests/abc202/tasks/abc202_c",0],
         ["Finding Patterns","C","str",50,C+"2102",0],
       ]],
       ["Sáb",[
@@ -489,6 +485,7 @@ export const WEEKS = [
         ["Convex Hull","C","geo",55,C+"2195",0],
       ]],
       ["Vie",[
+        ["Binomial Coefficients","C","adv",40,C+"1079",1],
         ["Sleeping in Class","UB","greedy",35,U+"1203",1],
         ["Blocked Billboard II","UB","geo",35,U+"783",1],
       ]],
@@ -519,6 +516,7 @@ export const WEEKS = [
         ["Necessary Roads","C","adv",55,C+"2177",0],
       ]],
       ["Vie",[
+        ["Array Division","C","bs",45,C+"1085",0],
         ["Necessary Cities","C","adv",50,C+"2178",0],
       ]],
       ["Sáb",[
@@ -548,6 +546,8 @@ export const WEEKS = [
         ["E. Almost Shortest Path","CF","sp",65,CF+"843/problem/D",0],
       ]],
       ["Vie",[
+        ["Movie Festival II","C","greedy",50,C+"1632",0],
+        ["Maximum Subarray Sum II","C","sort",55,C+"1644",0],
         ["D. Prefix-Suffix Palindrome","CF","str",55,CF+"1326/problem/D2",0],
       ]],
       ["Sáb",[
