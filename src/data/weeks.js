@@ -220,21 +220,20 @@ export const WEEKS = [
     days:[
       ["Lun",[
         ["Increasing Subsequence","C","dp",45,C+"1145",1],
-        ["Projects","C","dp",55,C+"1140",0],
       ]],
       ["Mar",[
-        ["Counting Numbers","C","dp",60,C+"2220",1],
+        ["Projects","C","dp",55,C+"1140",1],
       ]],
       ["Mié",[
         ["Elevator Rides","C","dp",70,C+"1653",1],
         ["Counting Tilings","C","dp",65,C+"2181",0],
       ]],
       ["Jue",[
-        ["Increasing Subsequence II","C","dp",55,C+"1748",1],
+        ["Counting Numbers","C","dp",60,C+"2220",1],
       ]],
       ["Vie",[
-        ["Subarray Divisibility","C","sort",45,C+"1662",1],
-        ["Mountain Range","C","dp",60,C+"1743",0],
+        ["Increasing Subsequence II","C","dp",55,C+"1748",1],
+        ["Subarray Divisibility","C","sort",45,C+"1662",0],
         ["It's Mooin' Time","UB","sort",35,U+"1445",0],
       ]],
       ["Sáb",[
@@ -242,6 +241,7 @@ export const WEEKS = [
         ["Post-mortem + análisis","CT","mixed",45,"",1],
       ]],
       ["Dom",[
+        ["Mountain Range","C","dp",60,C+"1743",0],
         ["Out of Place","UB","greedy",35,U+"785",1],
       ]],
     ]
