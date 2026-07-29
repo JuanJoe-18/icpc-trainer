@@ -216,33 +216,33 @@ export const WEEKS = [
   },
   {
     id:6, title:"DP Intermedio + USACO Gold DP · Transición", dates:"Jul 27 – Ago 2", phase:"sem", tech:"dp",
-    focus:"Semestre en marcha: Lunes y Miércoles con carga alta (5 materias), por lo que tienen 1 problema base (⭐). Martes y Jueves sostienen el avance técnico.",
+    focus:"Semestre en marcha: Mar y Jue con 1 problema (carga de clases). Lun y Vie aprovechan la monitoria del Club CP para avanzar más.",
     days:[
-      ["Dom",[
+      ["Lun",[
         ["Increasing Subsequence","C","dp",45,C+"1145",1],
         ["Projects","C","dp",55,C+"1140",0],
       ]],
-      ["Lun",[
+      ["Mar",[
         ["Counting Numbers","C","dp",60,C+"2220",1],
       ]],
-      ["Mar",[
+      ["Mié",[
         ["Elevator Rides","C","dp",70,C+"1653",1],
         ["Counting Tilings","C","dp",65,C+"2181",0],
       ]],
-      ["Mié",[
+      ["Jue",[
         ["Increasing Subsequence II","C","dp",55,C+"1748",1],
       ]],
-      ["Jue",[
-        ["Subarray Divisibility","C","sort",45,C+"1662",1],
-        ["It's Mooin' Time","UB","sort",35,U+"1445",0],
-        ["Mountain Range","C","dp",60,C+"1743",0],
-      ]],
       ["Vie",[
-        ["Out of Place","UB","greedy",35,U+"785",1],
+        ["Subarray Divisibility","C","sort",45,C+"1662",1],
+        ["Mountain Range","C","dp",60,C+"1743",0],
+        ["It's Mooin' Time","UB","sort",35,U+"1445",0],
       ]],
       ["Sáb",[
         ["🏆 SIMULACRO ICPC con equipo (3hrs)","CT","contest",180,"",1],
         ["Post-mortem + análisis","CT","mixed",45,"",1],
+      ]],
+      ["Dom",[
+        ["Out of Place","UB","greedy",35,U+"785",1],
       ]],
     ]
   },
