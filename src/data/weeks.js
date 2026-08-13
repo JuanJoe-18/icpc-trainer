@@ -277,366 +277,343 @@ export const WEEKS = [
       ]],
     ]
   },
-  {
-    id:8, title:"Árboles: LCA, Euler Tour, Queries", dates:"Ago 10–16", phase:"sem", tech:"tree",
-    focus:"Binary lifting, Euler tour para convertir problemas de árboles en problemas de rangos.",
+    {
+    id:8, title:"Árboles: LCA, Euler Tour (Recalibración)", dates:"Ago 10–16", phase:"sem", tech:"tree",
+    focus:"Recalibración Jue-Vie. Cubrir deuda de Distance Queries/Counting Paths. [L]=Learn, [C]=Consolidate, [R]=Recognition, [S]=Speed",
     days:[
       ["Dom",[
-        ["Distance Queries","C","tree",55,C+"1135",0],
-        ["Counting Paths","C","tree",60,C+"1136",0],
+        ["[L] Distance Queries","C","tree",55,"https://cses.fi/problemset/task/1135",0],
+        ["[L] Counting Paths","C","tree",60,"https://cses.fi/problemset/task/1136",0]
       ]],
       ["Lun",[
-        ["Subtree Queries","C","tree",55,C+"1137",0],
+        ["[C] Subtree Queries","C","tree",55,"https://cses.fi/problemset/task/1137",0]
       ]],
       ["Mar",[
-        ["Path Queries","C","tree",55,C+"1138",0],
+        ["[C] Path Queries","C","tree",55,"https://cses.fi/problemset/task/1138",0]
       ]],
       ["Mié",[
-        ["Distinct Colors","C","tree",60,C+"1139",0],
+        ["[C] Distinct Colors","C","tree",60,"https://cses.fi/problemset/task/1139",0]
       ]],
       ["Jue",[
-        ["Finding a Centroid","C","tree",50,C+"2079",0],
+        ["[L] Finding a Centroid","C","tree",50,"https://cses.fi/problemset/task/2079",0],
+        ["Slot: Recuperación Árboles (Si quedaron de Dom-Mié)","CT","mixed",60,"",1]
       ]],
       ["Vie",[
-        ["Triangles","UB","geo",35,U+"1011",0],
-        ["Guess the Animal","UB","impl",35,U+"893",0],
+        ["Slot: Mantenimiento Adaptativo (Debilidad)","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-        ["Upsolving","CT","mixed",60,"",0],
-      ]],
+        ["🏆 CONTEST VIRTUAL CF Div2 (Transición)","CF","contest",150,"",0],
+        ["Post-mortem (Categorizar Debilidad)","CT","mixed",40,"",1]
+      ]]
     ]
   },
   {
-    id:9, title:"Árboles Avanzados + Functional Graphs", dates:"Ago 17–23", phase:"sem", tech:"func",
-    focus:"Path Queries II (HLD/Segtree en árbol), Fixed-Length Paths, Planets Queries II.",
+    id:9, title:"Árboles Avanzados + Func Graphs", dates:"Ago 17–23", phase:"sem", tech:"func",
+    focus:"Principal: Trees HLD/Path Queries. Secundaria: Ninguna. Mantenimiento: Slot adaptativo el domingo.",
     days:[
       ["Dom",[
-        ["Path Queries II","C","tree",80,C+"2134",0],
-        ["Fixed-Length Paths I","C","tree",70,C+"2080",0],
+        ["Slot: Mantenimiento Adaptativo (De Contest Sáb)","CT","mixed",60,"",1],
+        ["[V] Repaso guiado (Opcional)","CT","mixed",40,"",0]
       ]],
       ["Lun",[
-        ["Planets Queries II","C","func",65,C+"1160",0],
+        ["[L] Planets Queries II","C","func",65,"https://cses.fi/problemset/task/1160",1]
       ]],
       ["Mar",[
-        ["Knight's Tour","C","graph",60,C+"1689",0],
+        ["[L] Path Queries II (HLD/SegTree en árbol)","C","tree",80,"https://cses.fi/problemset/task/2134",1]
       ]],
       ["Mié",[
-        ["Lifeguards","US","greedy",40,U+"786",0],
-        ["Photoshoot","UB","greedy",35,U+"1227",1],
+        ["[C] Fixed-Length Paths I","C","tree",70,"https://cses.fi/problemset/task/2080",1]
       ]],
       ["Jue",[
-        ["Fixed-Length Paths II","C","tree",80,C+"2081",0],
+        ["[C] Fixed-Length Paths II","C","tree",80,"https://cses.fi/problemset/task/2081",0]
       ]],
       ["Vie",[
-        ["Sum of Four Values","C","sort",55,C+"1642",0],
-        ["Sliding Window Median","C","slide",55,C+"1076",0],
+        ["Slot: Mantenimiento Adaptativo (Velocidad/Reconocimiento)","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
-        ["Upsolving","CF","mixed",40,"",0],
-      ]],
+        ["🏆 CONTEST con equipo (3h)","CT","contest",180,"",1],
+        ["Post-mortem + Upsolving","CT","mixed",60,"",1]
+      ]]
     ]
   },
   {
-    id:10, title:"Range Queries Foundation", dates:"Ago 24–30", phase:"sem", tech:"rq",
-    focus:"Segment Tree iterativo/recursivo, Fenwick. Debe salirte el Segtree en 10 minutos de memoria.",
+    id:10, title:"Range Queries Básico + Sliding Window", dates:"Ago 24–30", phase:"sem", tech:"rq",
+    focus:"Principal: SegTree/Fenwick [S] (10 min memo). Secundaria: Sliding Window inicial.",
     days:[
       ["Dom",[
-        ["Subarray Sums II","C","sort",45,C+"1661",0],
-        ["Dynamic Range Minimum Queries","C","rq",40,C+"1649",0],
-        ["Range Xor Queries","C","rq",35,C+"1650",0],
-        ["Range Update Queries","C","rq",45,C+"1651",0],
+        ["Slot: Mantenimiento Adaptativo (Post-Mortem)","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["Forest Queries","C","rq",40,C+"1652",0],
+        ["[S] Dynamic Range Minimum Queries","C","rq",30,"https://cses.fi/problemset/task/1649",1]
       ]],
       ["Mar",[
-        ["Hotel Queries","C","rq",55,C+"1143",0],
+        ["[S] Range Xor Queries","C","rq",30,"https://cses.fi/problemset/task/1650",1]
       ]],
       ["Mié",[
-        ["List Removals","C","rq",50,C+"1749",0],
+        ["[S] Range Update Queries","C","rq",40,"https://cses.fi/problemset/task/1651",1]
       ]],
       ["Jue",[
-        ["Salary Queries","C","rq",60,C+"1144",0],
+        ["[L] Sliding Window Median","C","slide",55,"https://cses.fi/problemset/task/1076",1]
       ]],
       ["Vie",[
-        ["Load Balancing","UB","sort",40,U+"617",1],
+        ["[L] Sliding Window Cost","C","slide",50,"https://cses.fi/problemset/task/1077",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-        ["Upsolving","CT","mixed",60,"",0],
-      ]],
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",1],
+        ["Post-mortem","CF","mixed",40,"",1]
+      ]]
     ]
   },
   {
-    id:11, title:"Range Queries Advanced + Lazy", dates:"Ago 31 – Sep 6", phase:"sem", tech:"rq",
-    focus:"Lazy propagation, 2D queries, problemas combinados. Template de Segtree+Lazy propio.",
+    id:11, title:"Range Queries Lazy", dates:"Ago 31 – Sep 6", phase:"sem", tech:"rq",
+    focus:"Principal: Lazy propagation. Mantenimiento: Grafos (Reconocimiento).",
     days:[
       ["Dom",[
-        ["Prefix Sum Queries","C","rq",55,C+"2166",0],
-        ["Pizzeria Queries","C","rq",60,C+"2206",0],
+        ["Slot: Mantenimiento Adaptativo (Grafos)","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["Subarray Sum Queries","C","rq",50,C+"1190",0],
+        ["[L] Prefix Sum Queries","C","rq",55,"https://cses.fi/problemset/task/2166",1]
       ]],
       ["Mar",[
-        ["Distinct Values Queries","C","rq",55,C+"1734",0],
+        ["[C] Pizzeria Queries","C","rq",60,"https://cses.fi/problemset/task/2206",1]
       ]],
       ["Mié",[
-        ["Range Updates and Sums","C","rq",70,C+"1735",0],
+        ["[C] Subarray Sum Queries","C","rq",50,"https://cses.fi/problemset/task/1190",1]
       ]],
       ["Jue",[
-        ["Polynomial Queries","C","rq",60,C+"1736",0],
+        ["[C] Range Updates and Sums","C","rq",70,"https://cses.fi/problemset/task/1735",1]
       ]],
       ["Vie",[
-        ["Into Blocks","CF","dsu",40,CF+"1209/problem/G1",0],
-        ["Forest Queries II","C","rq",55,C+"1739",0],
-        ["Kth Largest (Coord Compress + Segtree)","CF","rq",60,"https://codeforces.com/contest/1093/problem/G",1],
+        ["[R] Mantenimiento: CF Graph / DP (1500-1600)","CF","graph",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
-        ["Upsolving","CF","mixed",40,"",0],
-      ]],
+        ["🏆 CONTEST con equipo (3h)","CT","contest",180,"",1],
+        ["Post-mortem + Upsolving","CT","mixed",60,"",1]
+      ]]
     ]
   },
   {
-    id:12, title:"Range Queries Pro + Sliding Window", dates:"Sep 7–13", phase:"sem", tech:"slide",
-    focus:"Queries más difíciles de CSES + la sección Sliding Window completa.",
+    id:12, title:"RQ Avanzado + Coord Compress", dates:"Sep 7–13", phase:"sem", tech:"rq",
+    focus:"Principal: 2D Queries, Coord Compression. Secundaria: Sliding Window Adv.",
     days:[
       ["Dom",[
-        ["Range Queries and Copies","C","rq",65,C+"1737",0],
-        ["Missing Coin Sum Queries","C","rq",60,C+"2432",0],
+        ["Slot: Mantenimiento Adaptativo","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["Sliding Window Sum","C","slide",25,C+"2424",0],
-        ["Sliding Window Minimum","C","slide",35,C+"2425",0],
+        ["[L] Forest Queries II","C","rq",55,"https://cses.fi/problemset/task/1739",1]
       ]],
       ["Mar",[
-        ["Sliding Window Xor","C","slide",30,C+"2426",0],
-        ["Sliding Window Distinct Values","C","slide",40,C+"2428",0],
+        ["[C] Range Queries and Copies","C","rq",65,"https://cses.fi/problemset/task/1737",1]
       ]],
       ["Mié",[
-        ["Sliding Window Cost","C","slide",50,C+"1077",0],
+        ["[C] Kth Largest (Coord Compress)","CF","rq",60,"https://codeforces.com/contest/1093/problem/G",1]
       ]],
       ["Jue",[
-        ["Sliding Window Inversions","C","slide",55,C+"2430",0],
+        ["[C] Sliding Window Inversions","C","slide",55,"https://cses.fi/problemset/task/2430",1]
       ]],
       ["Vie",[
-        ["Distinct Values Subarrays II","C","sort",40,C+"2427",0],
-        ["Movie Festival Queries","C","rq",50,C+"1740",0],
-        ["Emergency Rations (Regional 2025 - E)","CF","rq",90,"https://codeforces.com/gym/106178/problem/E",1],
+        ["Slot: Mantenimiento Adaptativo (DP o Debilidad)","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-        ["Upsolving","CT","mixed",60,"",0],
-      ]],
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",1],
+        ["Post-mortem","CF","mixed",40,"",1]
+      ]]
     ]
   },
   {
     id:13, title:"String Algorithms", dates:"Sep 14–20", phase:"sem", tech:"str",
-    focus:"Hashing, KMP, borders, periods. String hashing como herramienta universal O(1) substring compare.",
+    focus:"Principal: Hashing como herramienta O(1), Borders. Mantenimiento: RQ Lazy.",
     days:[
       ["Dom",[
-        ["Word Combinations","C","str",55,C+"1731",0],
-        ["Finding Borders","C","str",50,C+"1732",0],
+        ["Slot: Mantenimiento Adaptativo (RQ Lazy / Debilidad)","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["Finding Periods","C","str",50,C+"1733",0],
+        ["[L] Word Combinations","C","str",55,"https://cses.fi/problemset/task/1731",1]
       ]],
       ["Mar",[
-        ["Minimal Rotation","C","str",55,C+"1110",0],
+        ["[L] Finding Borders","C","str",50,"https://cses.fi/problemset/task/1732",1]
       ]],
       ["Mié",[
-        ["Longest Palindrome","C","str",55,C+"1111",0],
+        ["[C] Finding Periods","C","str",50,"https://cses.fi/problemset/task/1733",1]
       ]],
       ["Jue",[
-        ["Palindrome Queries","C","str",60,C+"2420",0],
+        ["[C] Longest Palindrome","C","str",55,"https://cses.fi/problemset/task/1111",1]
       ]],
       ["Vie",[
-        ["Made Up","CF","sort",35,"https://atcoder.jp/contests/abc202/tasks/abc202_c",0],
-        ["Finding Patterns","C","str",50,C+"2102",0],
+        ["[S] Mantenimiento: Implementar Hashing / KMP rápido","CT","str",30,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
-        ["Upsolving","CF","mixed",40,"",0],
-      ]],
+        ["🏆 CONTEST con equipo (3h)","CT","contest",180,"",1],
+        ["Post-mortem + Upsolving","CT","mixed",60,"",1]
+      ]]
     ]
   },
   {
-    id:14, title:"Strings Avanzados + Geometry gaps", dates:"Sep 21–27", phase:"sem", tech:"geo",
-    focus:"Suffix arrays conceptos, Aho-Corasick intro, cerrar geometry gaps.",
+    id:14, title:"Técnicas Avanzadas Selectivas", dates:"Sep 21–27", phase:"sem", tech:"adv",
+    focus:"Principal: Meet in the Middle, Bitwise. Secundario: Strings. Prioridad a profundidad.",
     days:[
       ["Dom",[
-        ["Counting Patterns","C","str",55,C+"2103",0],
-        ["Distinct Substrings","C","str",60,C+"2104",0],
+        ["Slot: Mantenimiento Adaptativo","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["Pattern Positions","C","str",55,C+"2105",0],
+        ["[L] Meet in the Middle (Teoría + Guiado)","C","adv",60,"https://cses.fi/problemset/task/1628",1]
       ]],
       ["Mar",[
-        ["Repeating Substring","C","str",50,C+"2106",0],
+        ["[C] Meet in the Middle (Variante CF)","CF","adv",60,"",1]
       ]],
       ["Mié",[
-        ["Polygon Lattice Points","C","geo",40,C+"2193",0],
-        ["Minimum Euclidean Distance","C","geo",50,C+"2194",0],
+        ["[L] Counting Bits / Bitwise tricks","C","adv",40,"https://cses.fi/problemset/task/2419",1]
       ]],
       ["Jue",[
-        ["Convex Hull","C","geo",55,C+"2195",0],
+        ["[C] Reachable Nodes (Bitset)","C","adv",50,"https://cses.fi/problemset/task/2138",1]
       ]],
       ["Vie",[
-        ["Binomial Coefficients","C","adv",40,C+"1079",1],
-        ["Sleeping in Class","UB","greedy",35,U+"1203",1],
-        ["Blocked Billboard II","UB","geo",35,U+"783",1],
+        ["Slot: Mantenimiento (Strings KMP/Hashing)","CT","mixed",50,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST con equipo","CT","contest",180,"",0],
-        ["Upsolving","CT","mixed",60,"",0],
-      ]],
+        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",1],
+        ["Post-mortem","CF","mixed",40,"",1]
+      ]]
     ]
   },
   {
-    id:15, title:"Advanced Techniques + Bitwise", dates:"Sep 28 – Oct 4", phase:"sem", tech:"adv",
-    focus:"Meet in the Middle, SOS DP, bitwise tricks. Problemas de Advanced Techniques de CSES.",
+    id:15, title:"Reconocimiento I (Mixtos CF)", dates:"Sep 28 – Oct 4", phase:"sem", tech:"mixed",
+    focus:"[R] Romper la dependencia de las categorías. Seleccionar CF (1500-1700) para reconocimiento.",
     days:[
       ["Dom",[
-        ["Meet in the Middle","C","adv",60,C+"1628",0],
-        ["Counting Bits","C","adv",40,C+"2419",0],
+        ["Slot: Mantenimiento Estricto de Debilidades","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["Maximum Xor Subarray","C","adv",55,C+"1655",0],
+        ["[R] Problema Mixto CF (Ej. Greedy/DP)","CF","mixed",60,"https://codeforces.com/contest/913/problem/C",1]
       ]],
       ["Mar",[
-        ["Reachable Nodes","C","adv",50,C+"2138",0],
+        ["[R] Problema Mixto CF (Ej. Graph/Tree)","CF","mixed",60,"https://codeforces.com/contest/1187/problem/E",1]
       ]],
       ["Mié",[
-        ["Reachability Queries","C","adv",50,C+"2139",0],
+        ["[R] Problema Mixto CF (Ej. RQ/Sort)","CF","mixed",60,"https://codeforces.com/contest/1175/problem/E",1]
       ]],
       ["Jue",[
-        ["Necessary Roads","C","adv",55,C+"2177",0],
+        ["[R] Problema Mixto CF","CF","mixed",60,"https://codeforces.com/contest/1472/problem/D",1]
       ]],
       ["Vie",[
-        ["Array Division","C","bs",45,C+"1085",0],
-        ["Necessary Cities","C","adv",50,C+"2178",0],
+        ["Slot: Mantenimiento Adaptativo","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST VIRTUAL CF Div2","CF","contest",150,"",0],
-        ["Upsolving","CF","mixed",40,"",0],
-      ]],
+        ["🏆 CONTEST con equipo (3h)","CT","contest",180,"",1],
+        ["Post-mortem + Upsolving","CT","mixed",60,"",1]
+      ]]
     ]
   },
   {
-    id:16, title:"Problemas Mixtos Rating 1600–2000", dates:"Oct 5–11", phase:"sem", tech:"impl",
-    focus:"Ya no por categoría sino por habilidad: leer, identificar técnica, implementar limpio y rápido.",
+    id:16, title:"Reconocimiento II + Simulacro Transición", dates:"Oct 5–11", phase:"sem", tech:"mixed",
+    focus:"Preparación directa para ICPC. Dificultad 1700-1900. Sábado: Simulacro corto de 2.5h.",
     days:[
       ["Dom",[
-        ["D. Dijkstra?","CF","graph",60,CF+"20/problem/D",0],
-        ["E. Tree Painting","CF","tree",60,CF+"1187/problem/E",0],
+        ["Slot: Mantenimiento Adaptativo (Debilidades)","CT","mixed",60,"",1]
       ]],
       ["Lun",[
-        ["D. Journey","CF","dp",55,CF+"1472/problem/D",0],
+        ["[R] Problema Mixto CF","CF","mixed",60,"https://codeforces.com/contest/20/problem/D",1]
       ]],
       ["Mar",[
-        ["E. Minimal Segment Cover","CF","rq",60,CF+"1175/problem/E",0],
+        ["[R] Problema Mixto CF","CF","mixed",60,"https://codeforces.com/contest/843/problem/D",1]
       ]],
       ["Mié",[
-        ["C. Ski Base","CF","greedy",50,CF+"913/problem/C",0],
+        ["[R] Problema Mixto CF","CF","mixed",60,"https://codeforces.com/contest/1326/problem/D2",1]
       ]],
       ["Jue",[
-        ["E. Almost Shortest Path","CF","sp",65,CF+"843/problem/D",0],
+        ["[R] Problema Mixto CF","CF","mixed",60,"",1]
       ]],
       ["Vie",[
-        ["Movie Festival II","C","greedy",50,C+"1632",0],
-        ["Maximum Subarray Sum II","C","sort",55,C+"1644",0],
-        ["D. Prefix-Suffix Palindrome","CF","str",55,CF+"1326/problem/D2",0],
+        ["Slot: Mantenimiento Adaptativo","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 SIMULACRO ICPC con equipo (5hrs)","CT","contest",300,"",0],
-      ]],
+        ["🏆 SIMULACRO ICPC DE TRANSICIÓN (2.5h)","CT","contest",150,"",1],
+        ["Post-mortem y categorización","CT","mixed",40,"",1]
+      ]]
     ]
   },
   {
-    id:17, title:"Simulacro ICPC #1", dates:"Oct 12–18", phase:"sim", tech:"contest",
-    focus:"Set ICPC Latam Regional 2023. Post-mortem detallado. Upsolving completo.",
+    id:17, title:"Simulacro ICPC #1 (Rendimiento Equipo)", dates:"Oct 12–18", phase:"sim", tech:"contest",
+    focus:"Simulacro formal 5h. El resto de la semana se enfoca en Upsolving y atacar debilidades exactas.",
     days:[
       ["Dom",[
-        ["🏆 ICPC Latam Regional 2023 (equipo, 5hrs)","CT","contest",300,"",0],
+        ["🏆 ICPC Regional Formal (equipo, 5hrs)","CT","contest",300,"",1]
       ]],
       ["Lun",[
-        ["Upsolving Problema A o B","CT","mixed",60,"",0],
+        ["Upsolving Problema A o B","CT","mixed",60,"",1]
       ]],
       ["Mar",[
-        ["Upsolving Problema C o D","CT","mixed",70,"",0],
+        ["Upsolving Problema C o D","CT","mixed",70,"",1]
       ]],
       ["Mié",[
-        ["D. Treelabeling","CF","tree",55,CF+"1611/problem/D",0],
+        ["Debilidad Detectada: Problema de Recuperación","CT","mixed",60,"",1]
       ]],
       ["Jue",[
-        ["E. Editor","CF","rq",55,CF+"1263/problem/E",0],
+        ["Debilidad Detectada: Problema de Recuperación","CT","mixed",60,"",1]
       ]],
       ["Vie",[
-        ["Notebook: escribir/verificar templates","CT","mixed",60,"",0],
+        ["Notebook: Escribir/verificar templates","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST CF Div2 individual","CF","contest",150,"",0],
-      ]],
+        ["🏆 CONTEST VIRTUAL CF Div2 (Mantenimiento)","CF","contest",150,"",1]
+      ]]
     ]
   },
   {
     id:18, title:"Simulacro ICPC #2", dates:"Oct 19–25", phase:"sim", tech:"contest",
-    focus:"Set ICPC Latam Regional 2024. Ajustar estrategia de equipo.",
+    focus:"Ajustar estrategia de equipo, roles y velocidad. Post-mortem riguroso.",
     days:[
       ["Dom",[
-        ["🏆 ICPC Latam Regional 2024 (equipo, 5hrs)","CT","contest",300,"",0],
+        ["🏆 ICPC Regional Formal (equipo, 5hrs)","CT","contest",300,"",1]
       ]],
       ["Lun",[
-        ["Upsolving Problema más difícil","CT","mixed",70,"",0],
+        ["Upsolving Problema más difícil","CT","mixed",70,"",1]
       ]],
       ["Mar",[
-        ["Upsolving + editorial analysis","CT","mixed",60,"",0],
+        ["Upsolving + editorial analysis","CT","mixed",60,"",1]
       ]],
       ["Mié",[
-        ["F. Array Partition","CF","dp",55,CF+"1454/problem/F",0],
+        ["Debilidad Detectada: Recuperación","CT","mixed",60,"",1]
       ]],
       ["Jue",[
-        ["E. Greedy Shopping","CF","greedy",55,CF+"1800/problem/E",0],
+        ["Debilidad Detectada: Recuperación","CT","mixed",60,"",1]
       ]],
       ["Vie",[
-        ["Notebook: completar + probar","CT","mixed",60,"",0],
+        ["Notebook: Completar + probar en stress test","CT","mixed",60,"",1]
       ]],
       ["Sáb",[
-        ["🏆 CONTEST equipo (set internacional)","CT","contest",180,"",0],
-      ]],
+        ["🏆 CONTEST equipo (set internacional/corto)","CT","contest",180,"",1]
+      ]]
     ]
   },
   {
     id:19, title:"Simulacro ICPC #3 + Notebook Final", dates:"Oct 26 – Nov 1", phase:"sim", tech:"contest",
-    focus:"Último simulacro formal. Notebook impreso y verificado. Empezar a bajar la carga.",
+    focus:"Último simulacro. Bajar la carga cognitiva al final de la semana. Notebook impreso.",
     days:[
       ["Dom",[
-        ["🏆 ICPC Latam Regional 2022 (equipo, 5hrs)","CT","contest",300,"",0],
+        ["🏆 ICPC Regional Formal (equipo, 5hrs)","CT","contest",300,"",1]
       ]],
       ["Lun",[
-        ["Upsolving final","CT","mixed",60,"",0],
+        ["Upsolving final","CT","mixed",60,"",1]
       ]],
       ["Mar",[
-        ["Verificar TODOS los templates del notebook","CT","mixed",90,"",0],
+        ["Verificar TODOS los templates del notebook","CT","mixed",90,"",1]
       ]],
       ["Mié",[
-        ["Coin Combinations II (repaso)","C","dp",30,C+"1636",0],
-        ["Building Roads (repaso)","C","graph",30,C+"1666",0],
+        ["[S] Speed Drill: Implementar DP Clásica","C","dp",30,"https://cses.fi/problemset/task/1636",0],
+        ["[S] Speed Drill: Grafos Básico","C","graph",30,"https://cses.fi/problemset/task/1666",0]
       ]],
       ["Jue",[
-        ["Tree Diameter (repaso)","C","tree",30,C+"1131",0],
-        ["String Matching (repaso)","C","str",30,C+"1753",0],
+        ["[S] Speed Drill: Trees/LCA","C","tree",30,"https://cses.fi/problemset/task/1131",0],
+        ["[S] Speed Drill: Hashing/Strings","C","str",30,"https://cses.fi/problemset/task/1753",0]
       ]],
       ["Vie",[
-        ["Práctica ligera con equipo (2-3hrs)","CT","contest",150,"",0],
+        ["Práctica ligera con equipo (2hrs max)","CT","contest",120,"",1]
       ]],
       ["Sáb",[
-        ["Imprimir notebook final","CT","mixed",60,"",0],
-        ["Revisión estrategia equipo","CT","mixed",30,"",0],
-      ]],
+        ["Imprimir notebook final","CT","mixed",60,"",1],
+        ["Revisión estrategia equipo","CT","mixed",30,"",1]
+      ]]
     ]
   },
   {
@@ -644,27 +621,27 @@ export const WEEKS = [
     focus:"Bajar carga. Descansar. Llegar fresco el 7 de noviembre. Ya estás listo.",
     days:[
       ["Dom",[
-        ["1 problema fácil de warm-up","C","impl",20,C+"1068",0],
-        ["Repasar notebook grafos","CT","mixed",20,"",0],
+        ["1 problema fácil de warm-up","C","impl",20,"https://cses.fi/problemset/task/1068",0],
+        ["Repasar notebook grafos","CT","mixed",20,"",0]
       ]],
       ["Lun",[
-        ["Repasar notebook DP + Trees","CT","mixed",30,"",0],
+        ["Repasar notebook DP + Trees","CT","mixed",30,"",0]
       ]],
       ["Mar",[
-        ["Repasar notebook RQ + Strings","CT","mixed",30,"",0],
+        ["Repasar notebook RQ + Strings","CT","mixed",30,"",0]
       ]],
       ["Mié",[
-        ["Estrategia final equipo: quién lee qué, roles","CT","mixed",40,"",0],
+        ["Estrategia final equipo: roles, tiempos","CT","mixed",40,"",0]
       ]],
       ["Jue",[
-        ["🛌 DESCANSO TOTAL — no tocar código","CT","mixed",0,"",0],
+        ["🛌 DESCANSO TOTAL — no tocar código","CT","mixed",0,"",1]
       ]],
       ["Vie",[
-        ["🛌 Descanso + buena alimentación + dormir temprano","CT","mixed",0,"",0],
+        ["🛌 Descanso + buena alimentación + dormir temprano","CT","mixed",0,"",1]
       ]],
       ["Sáb",[
-        ["🏁 REGIONAL ICPC — A GANAR","CT","contest",300,"",0],
-      ]],
+        ["🏁 REGIONAL ICPC — A GANAR","CT","contest",300,"",1]
+      ]]
     ]
-  },
+  }
 ];

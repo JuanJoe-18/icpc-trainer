@@ -947,6 +947,85 @@
     border-color: var(--sky);
   }
 
+  .box.s4 {
+    background: #a855f7;
+    border-color: #9333ea;
+  }
+
+  .prob.postponed {
+    opacity: 0.85;
+  }
+
+  .prob.postponed .name {
+    color: #c084fc;
+  }
+
+  .prob.dragging {
+    opacity: 0.35;
+    background: rgba(123, 91, 221, 0.15) !important;
+    border: 1px dashed var(--grape) !important;
+  }
+
+  .day.drag-over {
+    border-color: var(--grape) !important;
+    box-shadow: 0 0 16px rgba(123, 91, 221, 0.3) !important;
+    background: rgba(123, 91, 221, 0.05) !important;
+  }
+
+  .drag-handle {
+    cursor: grab;
+    color: var(--ink-faint);
+    opacity: 0.4;
+    transition: opacity 0.15s;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+  }
+
+  .prob:hover .drag-handle {
+    opacity: 1;
+    color: var(--grape);
+  }
+
+  .drag-handle:active {
+    cursor: grabbing;
+  }
+
+  .db-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-pixel);
+    font-size: 9px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1.5px solid var(--line-strong);
+    color: var(--ink-soft);
+    box-shadow: var(--shadow);
+  }
+
+  .db-pill.connected {
+    border-color: var(--brand);
+    color: var(--brand);
+    background: var(--brand-tint);
+  }
+
+  .db-pill.saving {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-tint);
+  }
+
+  .db-pill.offline {
+    border-color: var(--sky);
+    color: var(--sky);
+    background: var(--sky-tint);
+  }
+
+
   .star {
     flex: 0 0 auto;
     width: 16px;

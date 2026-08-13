@@ -102,15 +102,16 @@ export default function Dashboard({ weeks, checked }) {
   }, [weeks, checked]);
 
   const totalStats = useMemo(() => {
-    let total = 0, done = 0, practicing = 0, reviewing = 0;
+    let total = 0, done = 0, practicing = 0, reviewing = 0, postponed = 0;
     weeks.forEach((wk, wi) => wk.days.forEach((d, di) => d[1].forEach((p, pi) => {
       total++;
       const st = checked[problemKey(p)] || 0;
-      if (st >= 2) done++;
+      if (st >= 2 && st !== 4) done++;
       if (st === 1) practicing++;
       if (st === 3) reviewing++;
+      if (st === 4) postponed++;
     })));
-    return { total, done, practicing, reviewing, pending: total - done - practicing - reviewing };
+    return { total, done, practicing, reviewing, postponed, pending: Math.max(0, total - done - practicing - reviewing - postponed) };
   }, [weeks, checked]);
 
   return (
@@ -135,9 +136,10 @@ export default function Dashboard({ weeks, checked }) {
         </h3>
 
         {/* Stats Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 8, marginBottom: 20 }}>
           {[
             { label: "Completados", value: totalStats.done, total: totalStats.total, color: "#00e5a0" },
+            { label: "Pospuestos", value: totalStats.postponed, total: totalStats.total, color: "#a855f7" },
             { label: "Practicando", value: totalStats.practicing, total: totalStats.total, color: "#fbbf24" },
             { label: "Repasando", value: totalStats.reviewing, total: totalStats.total, color: "#38bdf8" },
             { label: "Pendientes", value: totalStats.pending, total: totalStats.total, color: "#94a3b8" },

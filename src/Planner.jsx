@@ -1,5 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Dashboard from "./Dashboard";
+import { WEEKS } from "./data/weeks";
+import { readIndexedDB, writeIndexedDB, fetchServerProgress, saveServerProgress } from "./utils/db";
 
 // Format: [name, source, technique, minutes, url, starred]
 // Sources: C=CSES, UB=USACO Bronze, US=USACO Silver, UG=USACO Gold, UP=USACO Plat, CF=Codeforces, CT=Team
@@ -10,22 +12,23 @@ const C = "https://cses.fi/problemset/task/";
 const U = "http://www.usaco.org/index.php?page=viewproblem2&cpid=";
 const CF = "https://codeforces.com/contest/";
 
-import { WEEKS } from "./data/weeks";
-
 const TECH_COLORS = {
   impl:"#94a3b8", graph:"#00e5a0", sp:"#00e5a0", topo:"#00e5a0", scc:"#00e5a0",
   func:"#00e5a0", dsu:"#00e5a0", flow:"#38bdf8", dp:"#ff6b6b", tree:"#ffd43b",
   rq:"#fb923c", str:"#c084fc", geo:"#f472b6", adv:"#e879f9", sort:"#94a3b8",
   slide:"#fb923c", bs:"#94a3b8", greedy:"#94a3b8", mixed:"#64748b", contest:"#ff6b9d",
 };
+
 const TECH_LABELS = {
   impl:"Impl", graph:"Grafos", sp:"ShortPath", topo:"TopoSort", scc:"SCC",
   func:"FuncGraph", dsu:"DSU", flow:"Flow", dp:"DP", tree:"Árboles",
   rq:"RangeQ", str:"Strings", geo:"Geometría", adv:"Advanced", sort:"Sort&Search",
   slide:"SlidingW", bs:"BinSearch", greedy:"Greedy", mixed:"Mix", contest:"Contest",
 };
+
 const SRC_COLORS = { C:"#00e5a0", UB:"#fbbf24", US:"#38bdf8", UG:"#f59e0b", UP:"#a78bfa", CF:"#ff6b6b", CT:"#ff6b9d" };
 const SRC_LABELS = { C:"CSES", UB:"USACO🥉", US:"USACO🥈", UG:"USACO🥇", UP:"USACO💎", CF:"CF", CT:"Equipo" };
+
 const PHASE_INFO = {
   vac:{ label:"VACACIONES", sub:"5 hrs/día", color:"#00e5a0", bg:"rgba(0,229,160,0.06)" },
   sem:{ label:"SEMESTRE", sub:"2-3 hrs L-V · 4-5 hrs S-D", color:"#38bdf8", bg:"rgba(56,189,248,0.06)" },
@@ -86,15 +89,41 @@ const problemKey = (problem) => {
   return `problem:${source}:${identity}`;
 };
 
+const POSTPONABLE_TECHS = new Set([
+  "dp", "graph", "sp", "topo", "scc", "func", "dsu", "rq", "sort"
+]);
+
 function migrateProgress(data) {
+  const rawData = data || {};
   const migrated = Object.fromEntries(
-    Object.entries(data).filter(([key]) => key.startsWith("problem:"))
+    Object.entries(rawData).filter(([key]) => key.startsWith("problem:"))
   );
-  WEEKS.forEach((week, wi) => week.days.forEach((day, di) => day[1].forEach((problem, pi) => {
-    const legacyStatus = data[`${wi}-${di}-${pi}`] || 0;
-    const stableKey = problemKey(problem);
-    if (legacyStatus > (migrated[stableKey] || 0)) migrated[stableKey] = legacyStatus;
-  })));
+
+  WEEKS.forEach((week, wi) => {
+    const isWeek6or7 = week.id === 6 || week.id === 7;
+    const isEarlierWeek = week.id <= 5;
+
+    week.days.forEach((day, di) => {
+      day[1].forEach((problem, pi) => {
+        const legacyStatus = rawData[`${wi}-${di}-${pi}`];
+        const stableKey = problemKey(problem);
+
+        if (legacyStatus !== undefined && (migrated[stableKey] === undefined || legacyStatus > migrated[stableKey])) {
+          migrated[stableKey] = legacyStatus;
+        }
+
+        // Rule: Default week 6 and 7 as completed (2), and uncompleted DP/Graph/RQ/Sort in earlier weeks as postponed (4)
+        if (migrated[stableKey] === undefined) {
+          if (isWeek6or7) {
+            migrated[stableKey] = 2; // Marked as completed
+          } else if (isEarlierWeek && POSTPONABLE_TECHS.has(problem[2])) {
+            migrated[stableKey] = 4; // Postponed (avance previo)
+          }
+        }
+      });
+    });
+  });
+
   return migrated;
 }
 
@@ -124,6 +153,8 @@ export const ICONS = {
   "st-practice": `<path d="M13 2.5L5 13h5l-1 8.5L19.5 10H13z" fill="currentColor" stroke="none"/>`,
   "st-done": `<rect x="4" y="4" width="16" height="16" rx="4" opacity=".25"/><path d="M7.5 12.2l3.2 3.3L16.8 9"/>`,
   "st-review": `<path d="M4.5 10A8 8 0 0118 6.5l2.5 2M19.5 14A8 8 0 016 17.5L3.5 15.5"/><path d="M20.5 4v4.5H16M3.5 20v-4.5H8"/>`,
+  "st-postponed": `<path d="M5 4l10 8-10 8V4zM19 4v16"/>`,
+  "drag-grip": `<circle cx="8" cy="6" r="1.5" fill="currentColor"/><circle cx="14" cy="6" r="1.5" fill="currentColor"/><circle cx="8" cy="12" r="1.5" fill="currentColor"/><circle cx="14" cy="12" r="1.5" fill="currentColor"/><circle cx="8" cy="18" r="1.5" fill="currentColor"/><circle cx="14" cy="18" r="1.5" fill="currentColor"/>`,
   "st-star": `<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.8 6.4 20.6l1.1-6.2L3 8.0l6.2-.9z" fill="currentColor" stroke="none"/>`,
   "map": `<path d="M9 4L3 6.2v14L9 18l6 2.2 6-2.2V4l-6 2.2L9 4z"/><path d="M9 4v14M15 6.2v14"/>`,
   "calendar": `<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><rect x="6.8" y="12.5" width="3.2" height="3.2" rx=".6" fill="currentColor" stroke="none"/>`,
@@ -148,12 +179,13 @@ const STATUS = {
   1: { label: "Practicando", color: "#fbbf24", bg: "#fbbf2420", icon: "⚡" },
   2: { label: "Completado", color: "#00e5a0", bg: "#00e5a0", icon: "✓" },
   3: { label: "Repasando", color: "#38bdf8", bg: "#38bdf820", icon: "🔄" },
+  4: { label: "Pospuesto", color: "#a855f7", bg: "#a855f720", icon: "⏭️" },
 };
 
 function loadProgress() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? migrateProgress(JSON.parse(raw)) : {};
+    return raw ? JSON.parse(raw) : {};
   } catch { return {}; }
 }
 
@@ -161,89 +193,178 @@ function saveProgress(data) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch {}
 }
 
-function Countdown() {
-  const d = Math.max(0, Math.ceil((new Date("2026-11-07") - new Date()) / 864e5));
-  return (
-    <div style={{display:"flex",alignItems:"baseline",gap:6}}>
-      <span style={{fontSize:32,fontWeight:800,fontFamily:"monospace",color:"#ff6b9d",lineHeight:1}}>{d}</span>
-      <span style={{fontSize:12,color:"rgba(255,255,255,0.4)"}}>días para la Regional</span>
-    </div>
-  );
-}
-
 export default function Planner() {
   const [weekIdx, setWeekIdx] = useState(0);
-  const [checked, setChecked] = useState(loadProgress);
+  const [checked, setChecked] = useState(() => migrateProgress(loadProgress()));
+  const [weekOverrides, setWeekOverrides] = useState({});
   const [filterStarred, setFilterStarred] = useState(false);
   const [viewMode, setViewMode] = useState('map');
   const [activeTech, setActiveTech] = useState(null);
+  const [dbStatus, setDbStatus] = useState("connecting");
+  const [draggedItem, setDraggedItem] = useState(null);
+  const [dragOverDay, setDragOverDay] = useState(null);
 
-  useEffect(() => { saveProgress(checked); }, [checked]);
+  // Sync on Mount: IndexedDB + Server API + LocalStorage
+  useEffect(() => {
+    async function syncOnMount() {
+      const idbData = await readIndexedDB();
+      const serverData = await fetchServerProgress();
 
-  const w = WEEKS[weekIdx];
-  const pi = PHASE_INFO[w.phase];
+      let combinedChecked = loadProgress();
+      if (idbData && idbData.checked) combinedChecked = { ...combinedChecked, ...idbData.checked };
+      if (serverData && serverData.checked) combinedChecked = { ...combinedChecked, ...serverData.checked };
+
+      const finalChecked = migrateProgress(combinedChecked);
+      setChecked(finalChecked);
+
+      if (serverData && serverData.weekOverrides) {
+        setWeekOverrides(serverData.weekOverrides);
+      } else if (idbData && idbData.weekOverrides) {
+        setWeekOverrides(idbData.weekOverrides);
+      }
+
+      setDbStatus(serverData ? "connected" : "offline");
+    }
+    syncOnMount();
+  }, []);
+
+  // Save changes automatically
+  useEffect(() => {
+    saveProgress(checked);
+    writeIndexedDB({ checked, weekOverrides });
+
+    const timer = setTimeout(async () => {
+      setDbStatus("saving");
+      const ok = await saveServerProgress({ checked, weekOverrides, lastUpdated: new Date().toISOString() });
+      setDbStatus(ok ? "connected" : "offline");
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [checked, weekOverrides]);
+
+  const currentWeek = WEEKS[weekIdx];
+  const activeDays = weekOverrides[currentWeek.id] || currentWeek.days;
+  const pi = PHASE_INFO[currentWeek.phase];
+
   const toggleCheck = (problem) => {
     const key = problemKey(problem);
     setChecked(previous => {
       const current = previous[key] || 0;
-      const next = (current + 1) % 4;
+      const next = (current + 1) % 5;
       return { ...previous, [key]: next };
     });
   };
 
+  const handleDragStart = (e, itemData) => {
+    setDraggedItem(itemData);
+    e.dataTransfer.setData("text/plain", JSON.stringify(itemData));
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e, targetDow) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (dragOverDay !== targetDow) {
+      setDragOverDay(targetDow);
+    }
+  };
+
+  const handleDragLeave = (e, targetDow) => {
+    if (dragOverDay === targetDow) {
+      setDragOverDay(null);
+    }
+  };
+
+  const handleDrop = (e, weekId, targetDow) => {
+    e.preventDefault();
+    setDragOverDay(null);
+    if (!draggedItem) return;
+
+    const { sourceDow, problem } = draggedItem;
+    if (sourceDow === targetDow) {
+      setDraggedItem(null);
+      return;
+    }
+
+    const newDays = activeDays.map(([dow, problems]) => {
+      if (dow === sourceDow) {
+        return [dow, problems.filter(p => problemKey(p) !== problemKey(problem))];
+      }
+      if (dow === targetDow) {
+        return [dow, [...problems, problem]];
+      }
+      return [dow, problems];
+    });
+
+    setWeekOverrides(prev => ({
+      ...prev,
+      [weekId]: newDays
+    }));
+    setDraggedItem(null);
+  };
+
   const weekStats = useMemo(() => {
-    return WEEKS.map((wk, wi) => {
-      let total = 0, done = 0, mins = 0, starred = 0, starredDone = 0, practicing = 0, reviewing = 0;
-      wk.days.forEach((d, di) => {
-        d[1].forEach((p, pi) => {
+    return WEEKS.map((wk) => {
+      const days = weekOverrides[wk.id] || wk.days;
+      let total = 0, done = 0, postponed = 0, mins = 0, starred = 0, starredDone = 0, practicing = 0, reviewing = 0;
+      days.forEach((d) => {
+        d[1].forEach((p) => {
           total++;
           mins += p[3];
           if (p[5]) starred++;
           const st = checked[problemKey(p)] || 0;
-          if (st >= 2) {
+          if (st === 2) {
             done++;
             if (p[5]) starredDone++;
           }
+          if (st === 4) postponed++;
           if (st === 1) practicing++;
           if (st === 3) reviewing++;
         });
       });
-      return { total, done, mins, starred, starredDone, practicing, reviewing };
+      return { total, done, postponed, mins, starred, starredDone, practicing, reviewing };
     });
-  }, [checked]);
+  }, [checked, weekOverrides]);
 
   const globalStats = useMemo(() => {
-    let total=0, done=0, cses=0, usaco=0, cf=0, starred=0, starredDone=0, practicing=0, reviewing=0;
-    WEEKS.forEach((wk,wi) => wk.days.forEach((d,di) => d[1].forEach((p,pi) => {
-      total++;
-      const st = checked[problemKey(p)] || 0;
-      if(st >= 2) done++;
-      if(st === 1) practicing++;
-      if(st === 3) reviewing++;
-      if(p[1]==="C") cses++;
-      else if(p[1].startsWith("U")) usaco++;
-      else if(p[1]==="CF") cf++;
-      if(p[5]) { starred++; if(st >= 2) starredDone++; }
-    })));
-    return {total,done,cses,usaco,cf,starred,starredDone,practicing,reviewing};
-  }, [checked]);
+    let total=0, done=0, postponed=0, cses=0, usaco=0, cf=0, starred=0, starredDone=0, practicing=0, reviewing=0;
+    WEEKS.forEach((wk) => {
+      const days = weekOverrides[wk.id] || wk.days;
+      days.forEach((d) => d[1].forEach((p) => {
+        total++;
+        const st = checked[problemKey(p)] || 0;
+        if(st === 2) done++;
+        if(st === 4) postponed++;
+        if(st === 1) practicing++;
+        if(st === 3) reviewing++;
+        if(p[1]==="C") cses++;
+        else if(p[1].startsWith("U")) usaco++;
+        else if(p[1]==="CF") cf++;
+        if(p[5]) { starred++; if(st === 2 || st === 4) starredDone++; }
+      }));
+    });
+    return {total,done,postponed,cses,usaco,cf,starred,starredDone,practicing,reviewing};
+  }, [checked, weekOverrides]);
 
   const techStats = useMemo(() => {
     const stats = {};
-    WEEKS.forEach((wk,wi) => wk.days.forEach((d,di) => d[1].forEach((p,pi) => {
-      const tech = p[2];
-      if (!stats[tech]) stats[tech] = { total:0, done:0 };
-      stats[tech].total++;
-      const st = checked[problemKey(p)] || 0;
-      if (st >= 2) stats[tech].done++;
-    })));
+    WEEKS.forEach((wk) => {
+      const days = weekOverrides[wk.id] || wk.days;
+      days.forEach((d) => d[1].forEach((p) => {
+        const tech = p[2];
+        if (!stats[tech]) stats[tech] = { total:0, done:0 };
+        stats[tech].total++;
+        const st = checked[problemKey(p)] || 0;
+        if (st === 2 || st === 4) stats[tech].done++;
+      }));
+    });
     return stats;
-  }, [checked]);
+  }, [checked, weekOverrides]);
 
   const st = weekStats[weekIdx];
 
   const exportData = () => {
-    const blob = new Blob([JSON.stringify(checked, null, 2)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify({ checked, weekOverrides }, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url; a.download = "icpc-progress.json"; a.click();
@@ -257,33 +378,51 @@ export default function Planner() {
     reader.onload = (ev) => {
       try {
         const data = JSON.parse(ev.target.result);
-        setChecked(migrateProgress(data));
-      } catch { alert("Invalid file"); }
+        const importedChecked = data.checked || data;
+        setChecked(migrateProgress(importedChecked));
+        if (data.weekOverrides) setWeekOverrides(data.weekOverrides);
+      } catch { alert("Archivo JSON inválido"); }
     };
     reader.readAsText(file);
   };
 
-
   const renderProblem = (p, di, piOriginalIdx, dow) => {
     const [name, src, tech, mins, url, starred] = p;
-    const status = checked[problemKey(p)] || 0;
-    const isDone = status >= 2;
+    const key = problemKey(p);
+    const status = checked[key] || 0;
+    const isDone = status === 2;
+    const isPostponed = status === 4;
+    const isDragging = draggedItem && problemKey(draggedItem.problem) === key;
     
     let boxCls = "";
     let boxContent = null;
     if (status === 1) { boxCls = "s1"; boxContent = <Icon name="st-practice"/>; }
     else if (status === 2) { boxCls = "s2"; boxContent = <Icon name="st-done"/>; }
     else if (status === 3) { boxCls = "s3"; boxContent = <Icon name="st-review"/>; }
+    else if (status === 4) { boxCls = "s4"; boxContent = <Icon name="st-postponed"/>; }
 
     return (
-      <div key={`${dow}-${problemKey(p)}`} className={`prob ${isDone ? 'done' : ''} ${dow === 'Backlog' ? 'backlog-prob' : ''}`}>
-        <div className={`box ${boxCls}`} onClick={() => toggleCheck(p)} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>{boxContent}</div>
-        <div className="star" style={{display:"flex",alignItems:"center",justifyContent:"center"}}>{starred === 1 ? <Icon name="st-star"/> : null}</div>
+      <div 
+        key={`${dow}-${key}`}
+        draggable
+        onDragStart={(e) => handleDragStart(e, { sourceDow: dow, problem: p })}
+        className={`prob ${isDone ? 'done' : ''} ${isPostponed ? 'postponed' : ''} ${isDragging ? 'dragging' : ''} ${dow === 'Backlog' ? 'backlog-prob' : ''}`}
+      >
+        <div className="drag-handle" title="Arrastrar problema">
+          <Icon name="drag-grip" size={14} />
+        </div>
+        <div className={`box ${boxCls}`} onClick={() => toggleCheck(p)} style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+          {boxContent}
+        </div>
+        <div className="star" style={{display:"flex",alignItems:"center",justifyContent:"center"}}>
+          {starred === 1 ? <Icon name="st-star"/> : null}
+        </div>
         <div className="name">
           {url ? <a href={url} target="_blank" rel="noopener noreferrer" style={{color:'inherit', textDecoration:'inherit'}}>{name}</a> : name}
         </div>
         <div className="tags">
           {dow === 'Backlog' && <span className="tag backlog-tag">Arrastre</span>}
+          {status === 4 && <span className="tag" style={{background:"rgba(168,85,247,0.2)", color:"#c084fc", border:"1px solid rgba(168,85,247,0.4)"}}>Pospuesto</span>}
           <span className={`tag ${src==='C' ? 'src-cses' : src.startsWith('U') ? 'src-usaco' : src==='CF' ? 'src-cf' : 'tech g'}`}>{SRC_LABELS[src]}</span>
           <span className="tag tech">{TECH_LABELS[tech]}</span>
         </div>
@@ -294,7 +433,7 @@ export default function Planner() {
 
   const getFilteredProblems = (dowList) => {
     const res = [];
-    w.days.forEach(([dow, problems], di) => {
+    activeDays.forEach(([dow, problems], di) => {
       if (dowList.includes(dow)) {
         problems.forEach((p, pi) => {
           if (!filterStarred || p[5] === 1) res.push({p, di, pi, dow});
@@ -311,13 +450,15 @@ export default function Planner() {
   const speedProblems = getFilteredProblems(['Vie']);
   const teamProblems = getFilteredProblems(['Sáb']);
   const sundayProblems = getFilteredProblems(['Dom']);
-  
+
   const currentProblemKeys = new Set(
-    w.days.flatMap(([, problems]) => problems.map(problemKey))
+    activeDays.flatMap(([, problems]) => problems.map(problemKey))
   );
+
   const backlogByProblem = new Map();
-  WEEKS.slice(0, weekIdx).forEach((previousWeek, wi) => {
-    previousWeek.days.forEach(([dow, problems], di) => {
+  WEEKS.slice(0, weekIdx).forEach((previousWeek) => {
+    const days = weekOverrides[previousWeek.id] || previousWeek.days;
+    days.forEach(([dow, problems], di) => {
       if (dow === 'Sáb') return;
       problems.forEach((p, pi) => {
         if (['contest', 'mixed'].includes(p[2])) return;
@@ -325,26 +466,31 @@ export default function Planner() {
         const status = checked[key] || 0;
         if (status >= 2 || currentProblemKeys.has(key)) return;
         if (!filterStarred || p[5] === 1) {
-          backlogByProblem.set(key, {p, wi, di, pi, dow:'Backlog', status});
+          backlogByProblem.set(key, {p, wi: previousWeek.id, di, pi, dow:'Backlog', status});
         }
       });
     });
   });
-  // Arrastre real de semanas anteriores: máximo dos problemas, sin duplicar
-  // los que ya aparecen en la semana actual.
+
   const backlogProblems = [...backlogByProblem.values()]
     .sort((a, b) => (b.wi - a.wi) || (b.status - a.status) || ((b.p[5] || 0) - (a.p[5] || 0)))
     .slice(0, 2);
 
-  const renderBlock = (title, blockClass, items) => {
-    if (items.length === 0) return null;
+  const renderBlock = (title, blockClass, dow, items) => {
+    if (!items || items.length === 0) return null;
     const totalMins = items.reduce((sum, item) => sum + item.p[3], 0);
     const starredMins = items.filter(item => item.p[5] === 1).reduce((sum, item) => sum + item.p[3], 0);
     const minDisplay = (starredMins > 0 && starredMins < totalMins)
       ? `${totalMins} min (⭐ ${starredMins}m base)`
       : `${totalMins} min`;
+    const isDragOver = dragOverDay === dow;
     return (
-      <div className={`day block-${blockClass}`}>
+      <div 
+        className={`day block-${blockClass} ${isDragOver ? 'drag-over' : ''}`}
+        onDragOver={(e) => handleDragOver(e, dow)}
+        onDragLeave={(e) => handleDragLeave(e, dow)}
+        onDrop={(e) => handleDrop(e, currentWeek.id, dow)}
+      >
         <div className="day-head">
           <div className="day-name">{title}</div>
           <div className="day-min">{minDisplay}</div>
@@ -362,12 +508,21 @@ export default function Planner() {
         display:"flex", flexDirection:"column", justifyContent:"flex-end",
         padding: "30px 40px", background:"#050508"
       }}>
-        <img src={viewMode === 'plan' && WEEKS[weekIdx] ? (GIFS[WEEKS[weekIdx].tech] || (WEEKS[weekIdx].phase === 'sim' ? GIFS.contest : GIFS.mixed)) : (activeTech ? (GIFS[activeTech] || GIFS.mixed) : GIFS.mixed)} 
+        <img src={viewMode === 'plan' && currentWeek ? (GIFS[currentWeek.tech] || (currentWeek.phase === 'sim' ? GIFS.contest : GIFS.mixed)) : (activeTech ? (GIFS[activeTech] || GIFS.mixed) : GIFS.mixed)} 
              style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",imageRendering:"pixelated",opacity:0.6,zIndex:0}} alt="Hero" />
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top, var(--canvas) 0%, rgba(10,10,16,0.6) 40%, transparent 100%)",zIndex:1}}></div>
         <div style={{position:"relative",zIndex:2, display:"flex", justifyContent:"space-between", alignItems:"flex-end", flexWrap:"wrap", gap:20}}>
           <div>
-            <div className="eyebrow"><span className="dot"></span> ICPC 2026 · DAILY TRAINING PLANNER</div>
+            <div className="eyebrow" style={{display:"flex", alignItems:"center", gap:12}}>
+              <span style={{display:"inline-flex", alignItems:"center", gap:6}}>
+                <span className="dot"></span> ICPC 2026 · DAILY TRAINING PLANNER
+              </span>
+              <span className={`db-pill ${dbStatus}`}>
+                {dbStatus === "connected" && "🟢 Auto-Sync DB (Disco)"}
+                {dbStatus === "saving" && "🟡 Guardando en disco..."}
+                {dbStatus === "offline" && "🔵 Modo Local (IndexedDB)"}
+              </span>
+            </div>
             <h1 className="title" style={{color:"#fff", textShadow:"0 2px 4px rgba(0,0,0,0.8)"}}>Plan Diario de Problemas</h1>
             <div className="sub" style={{color:"var(--ink-soft)", textShadow:"0 1px 2px rgba(0,0,0,0.8)"}}>Jun 22 → Nov 7 · <b>20 semanas</b> · <b>{globalStats.total} problemas</b> · ⭐ {globalStats.starred} starred</div>
           </div>
@@ -380,9 +535,10 @@ export default function Planner() {
 
       <div className="stats">
         <div className="stat c-green"><div className="v" id="st-comp">{globalStats.done}/{globalStats.total}</div><div className="k">Completados</div></div>
+        <div className="stat c-grape"><div className="v" id="st-posp">{globalStats.postponed}</div><div className="k" style={{display:"flex",alignItems:"center",gap:4}}><Icon name="st-postponed"/> Pospuestos</div></div>
         <div className="stat c-gold"><div className="v" id="st-prac">{globalStats.practicing}</div><div className="k" style={{display:"flex",alignItems:"center",gap:4}}><Icon name="st-practice"/> Practicando</div></div>
         <div className="stat c-sky"><div className="v" id="st-rep">{globalStats.reviewing}</div><div className="k" style={{display:"flex",alignItems:"center",gap:4}}><Icon name="st-review"/> Repasando</div></div>
-        <div className="stat c-grape"><div className="v" id="st-prog">{Math.round((globalStats.done/Math.max(globalStats.total,1))*100)}%</div><div className="k">Progreso</div></div>
+        <div className="stat c-green"><div className="v" id="st-prog">{Math.round(((globalStats.done + globalStats.postponed)/Math.max(globalStats.total,1))*100)}%</div><div className="k">Avance Total</div></div>
       </div>
       <div className="stats">
         <div className="stat c-green"><div className="v">{globalStats.cses}</div><div className="k">CSES</div></div>
@@ -398,7 +554,6 @@ export default function Planner() {
 
       {viewMode === 'map' && (
         <section id="view-map">
-
           <div className="map-intro">Cada técnica es un <b>mundo</b> que vas dominando. Selecciona una para ver los recursos recomendados.</div>
           <div className="grid">
             {Object.keys(TECH_LABELS).map(tech => {
@@ -434,7 +589,6 @@ export default function Planner() {
           {activeTech && (
             <div style={{position:"fixed", inset:0, background:"rgba(0,0,0,0.7)", backdropFilter:"blur(6px)", zIndex:100, display:"grid", placeItems:"center", padding:16}} onClick={() => setActiveTech(null)}>
               <div style={{background:"var(--surface)", border:"1.5px solid var(--line-strong)", borderRadius:"var(--radius)", overflow:"hidden", width:"100%", maxWidth:520, boxShadow:"0 24px 48px rgba(0,0,0,0.6)"}} onClick={e => e.stopPropagation()}>
-                {/* GIF Banner */}
                 <div style={{position:"relative", height:160, overflow:"hidden"}}>
                   <img src={GIFS[activeTech] || GIFS.mixed} style={{width:"100%",height:"100%",objectFit:"cover",imageRendering:"pixelated"}} alt="" />
                   <div style={{position:"absolute",inset:0,background:"linear-gradient(to top, var(--surface) 0%, rgba(17,17,22,0.4) 50%, transparent 100%)"}}></div>
@@ -481,24 +635,24 @@ export default function Planner() {
             </div>
             <div className="tools">
               <button className={`tool ${filterStarred ? 'on' : ''}`} onClick={() => setFilterStarred(!filterStarred)}>⭐ Prioridad</button>
-              <button className="tool" onClick={exportData}>💾 Export Sync</button>
-              <label className="tool" style={{margin:0}}>📥 Import Sync<input type="file" accept=".json" onChange={importData} style={{display:"none"}}/></label>
+              <button className="tool" onClick={exportData}>💾 Export Backup</button>
+              <label className="tool" style={{margin:0}}>📥 Import Backup<input type="file" accept=".json" onChange={importData} style={{display:"none"}}/></label>
             </div>
           </div>
 
           <div className="banner" style={{position:"relative", overflow:"hidden", background:"#050508", padding:"30px 28px 24px", border:"2px solid var(--line-strong)"}}>
-            <img src={GIFS[w.tech] || (w.phase === 'sim' ? GIFS.contest : GIFS.mixed)} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",imageRendering:"pixelated",opacity:1,zIndex:0}} alt="bg" />
+            <img src={GIFS[currentWeek.tech] || (currentWeek.phase === 'sim' ? GIFS.contest : GIFS.mixed)} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",imageRendering:"pixelated",opacity:1,zIndex:0}} alt="bg" />
             <div style={{position:"absolute",inset:0,background:"linear-gradient(to right, rgba(10,10,16,0.85) 0%, rgba(10,10,16,0.5) 50%, transparent 100%)",zIndex:1}}></div>
 
             <div className="meta" style={{position:"relative", zIndex:2, marginBottom:12, display:"flex", flexWrap:"wrap", alignItems:"center", gap:8}}>
-               <span style={{fontFamily:"var(--font-pixel)", fontSize:9, background:"rgba(0,0,0,0.6)", padding:"5px 10px", borderRadius:6, backdropFilter:"blur(4px)", color:"#fff", border:"1px solid rgba(255,255,255,0.1)"}}>SEMANA {w.id} · {w.dates}</span>
+               <span style={{fontFamily:"var(--font-pixel)", fontSize:9, background:"rgba(0,0,0,0.6)", padding:"5px 10px", borderRadius:6, backdropFilter:"blur(4px)", color:"#fff", border:"1px solid rgba(255,255,255,0.1)"}}>SEMANA {currentWeek.id} · {currentWeek.dates}</span>
                <span style={{fontFamily:"var(--font-pixel)", fontSize:9, background:`${pi.color}20`, padding:"5px 10px", borderRadius:6, color:pi.color, border:`1px solid ${pi.color}40`}}>{pi.label} · {pi.sub}</span>
-               <span style={{fontFamily:"var(--font-pixel)", fontSize:9, color:"#fff", marginLeft:"auto", textShadow:"0 2px 4px rgba(0,0,0,0.9)"}}>{st.done}/{st.total}</span>
+               <span style={{fontFamily:"var(--font-pixel)", fontSize:9, color:"#fff", marginLeft:"auto", textShadow:"0 2px 4px rgba(0,0,0,0.9)"}}>{st.done + st.postponed}/{st.total}</span>
                <span style={{fontFamily:"var(--font-pixel)", fontSize:9, color:"var(--gold)", textShadow:"0 2px 4px rgba(0,0,0,0.9)"}}>⭐ {st.starredDone}/{st.starred}</span>
             </div>
 
-            <h2 style={{position:"relative", zIndex:2, color:"#fff", textShadow:"0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,0.9)", fontFamily:"var(--font-pixel)", fontSize:"clamp(14px,2.2vw,20px)", fontWeight:400, marginTop:0, letterSpacing:"0px", textTransform:"uppercase", lineHeight:1.5}}>{w.title}</h2>
-            <p style={{position:"relative", zIndex:2, color:"rgba(255,255,255,0.85)", textShadow:"0 2px 4px rgba(0,0,0,0.9)", maxWidth:600, fontSize:14, fontWeight:500, lineHeight:1.5, margin:"4px 0 0"}}>{w.focus}</p>
+            <h2 style={{position:"relative", zIndex:2, color:"#fff", textShadow:"0 3px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,0.9)", fontFamily:"var(--font-pixel)", fontSize:"clamp(14px,2.2vw,20px)", fontWeight:400, marginTop:0, letterSpacing:"0px", textTransform:"uppercase", lineHeight:1.5}}>{currentWeek.title}</h2>
+            <p style={{position:"relative", zIndex:2, color:"rgba(255,255,255,0.85)", textShadow:"0 2px 4px rgba(0,0,0,0.9)", maxWidth:600, fontSize:14, fontWeight:500, lineHeight:1.5, margin:"4px 0 0"}}>{currentWeek.focus}</p>
 
             <div style={{position:"relative", zIndex:2, display:"flex", alignItems:"center", gap:24, marginTop:18, flexWrap:"wrap"}}>
                <button className="btn-codedex" onClick={() => {
@@ -510,26 +664,27 @@ export default function Planner() {
                <span style={{fontFamily:"var(--font-pixel)", fontSize:9, color:"rgba(255,255,255,0.5)", display:"flex", alignItems:"center", gap:8}}><Icon name="clock" size={14}/> ~{Math.round(st.mins/60)}hrs estimadas</span>
             </div>
             
-            <div className="xp" style={{position:"relative", zIndex:2, marginTop:18, background:"rgba(0,0,0,0.5)", border:"1px solid rgba(255,255,255,0.1)"}}><i style={{width:`${st.total > 0 ? (st.done/st.total)*100 : 0}%`}}></i></div>
+            <div className="xp" style={{position:"relative", zIndex:2, marginTop:18, background:"rgba(0,0,0,0.5)", border:"1px solid rgba(255,255,255,0.1)"}}><i style={{width:`${st.total > 0 ? ((st.done + st.postponed)/st.total)*100 : 0}%`}}></i></div>
           </div>
 
           <div id="days">
-            {renderBlock("Lunes · Técnica principal + mantenimiento", "theory", mondayProblems)}
-            {renderBlock("Martes · Técnica principal + mantenimiento", "theory", tuesdayProblems)}
-            {renderBlock("Miércoles · Técnica principal + mantenimiento", "theory", wednesdayProblems)}
-            {renderBlock("Jueves · Técnica principal + mantenimiento", "theory", thursdayProblems)}
-            {renderBlock("Viernes (Recuperación activa)", "speed", speedProblems)}
-            {renderBlock("Sábado (Único contest semanal)", "team", teamProblems)}
-            {renderBlock("Domingo (Ligero · arrastre máximo 2)", "upsolving", [...sundayProblems, ...backlogProblems])}
+            {renderBlock("Lunes · Técnica principal + mantenimiento", "theory", "Lun", mondayProblems)}
+            {renderBlock("Martes · Técnica principal + mantenimiento", "theory", "Mar", tuesdayProblems)}
+            {renderBlock("Miércoles · Técnica principal + mantenimiento", "theory", "Mié", wednesdayProblems)}
+            {renderBlock("Jueves · Técnica principal + mantenimiento", "theory", "Jue", thursdayProblems)}
+            {renderBlock("Viernes (Recuperación activa)", "speed", "Vie", speedProblems)}
+            {renderBlock("Sábado (Único contest semanal)", "team", "Sáb", teamProblems)}
+            {renderBlock("Domingo (Ligero · arrastre máximo 2)", "upsolving", "Dom", [...sundayProblems, ...backlogProblems])}
           </div>
 
           <div className="panel">
-            <div className="ph">ESTADOS · click en la casilla para ciclar</div>
+            <div className="ph">ESTADOS · click en la casilla para ciclar (arrastra los problemas para moverlos entre días)</div>
             <div className="legend">
               <div className="leg"><span className="swatch"></span> No hecho</div>
               <div className="leg"><span className="swatch s1"><Icon name="st-practice"/></span> Practicando</div>
               <div className="leg"><span className="swatch s2"><Icon name="st-done"/></span> Completado</div>
               <div className="leg"><span className="swatch s3"><Icon name="st-review"/></span> Repasando</div>
+              <div className="leg"><span className="swatch s4"><Icon name="st-postponed"/></span> Pospuesto</div>
             </div>
           </div>
 
@@ -558,7 +713,7 @@ export default function Planner() {
         </section>
       )}
 
-      <footer><span>Plan calibrado</span>·<span>20 semanas</span>·<span>CSES + USACO Guide + CF</span>·<span>Progreso guardado localmente</span></footer>
+      <footer><span>Plan calibrado</span>·<span>20 semanas</span>·<span>CSES + USACO Guide + CF</span>·<span>Base de datos sincronizada</span></footer>
     </div>
   );
 }
