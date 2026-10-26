@@ -3,7 +3,36 @@ import react from '@vitejs/plugin-react'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const dbPath = path.resolve(__dirname, 'src/data/progress.json')
+const localDbPath = path.resolve(__dirname, 'src/data/progress.json')
+const workspaceDbPath = '\\\\wsl.localhost\\Arch\\root\\CodeForces\\Training System\\icpc-trainer\\src\\data\\progress.json'
+
+function readExistingDb() {
+  for (const p of [localDbPath, workspaceDbPath]) {
+    try {
+      if (fs.existsSync(p)) {
+        return JSON.parse(fs.readFileSync(p, 'utf-8') || '{}')
+      }
+    } catch {}
+  }
+  return {}
+}
+
+function mergeDbData(existing, incoming) {
+  return {
+    ...existing,
+    ...incoming,
+    checked: { ...(existing.checked || {}), ...(incoming.checked || {}) },
+    weekOverrides: { ...(existing.weekOverrides || {}), ...(incoming.weekOverrides || {}) },
+    cpt: {
+      problems: { ...(existing.cpt?.problems || {}), ...(incoming.cpt?.problems || {}) },
+      readings: { ...(existing.cpt?.readings || {}), ...(incoming.cpt?.readings || {}) },
+      theorems: { ...(existing.cpt?.theorems || {}), ...(incoming.cpt?.theorems || {}) },
+      checkpoints: { ...(existing.cpt?.checkpoints || {}), ...(incoming.cpt?.checkpoints || {}) },
+      notes: { ...(existing.cpt?.notes || {}), ...(incoming.cpt?.notes || {}) },
+    },
+    lastUpdated: incoming.lastUpdated || new Date().toISOString()
+  }
+}
 
 function localDatabasePlugin() {
   return {
@@ -21,17 +50,9 @@ function localDatabasePlugin() {
           }
           
           if (req.method === 'GET') {
-            try {
-              if (fs.existsSync(dbPath)) {
-                const data = fs.readFileSync(dbPath, 'utf-8')
-                res.setHeader('Content-Type', 'application/json')
-                return res.end(data || '{}')
-              }
-            } catch (err) {
-              console.error('Error reading progress db:', err)
-            }
+            const data = readExistingDb()
             res.setHeader('Content-Type', 'application/json')
-            return res.end('{}')
+            return res.end(JSON.stringify(data))
           }
           
           if (req.method === 'POST') {
@@ -39,8 +60,17 @@ function localDatabasePlugin() {
             req.on('data', chunk => { body += chunk.toString() })
             req.on('end', () => {
               try {
-                fs.mkdirSync(path.dirname(dbPath), { recursive: true })
-                fs.writeFileSync(dbPath, body, 'utf-8')
+                const incoming = JSON.parse(body || '{}')
+                const existing = readExistingDb()
+                const merged = mergeDbData(existing, incoming)
+                const serialized = JSON.stringify(merged)
+
+                fs.mkdirSync(path.dirname(localDbPath), { recursive: true })
+                fs.writeFileSync(localDbPath, serialized, 'utf-8')
+                try {
+                  fs.mkdirSync(path.dirname(workspaceDbPath), { recursive: true })
+                  fs.writeFileSync(workspaceDbPath, serialized, 'utf-8')
+                } catch {}
                 res.setHeader('Content-Type', 'application/json')
                 return res.end(JSON.stringify({ status: 'ok', timestamp: Date.now() }))
               } catch (err) {
@@ -60,5 +90,9 @@ function localDatabasePlugin() {
 
 export default defineConfig({
   plugins: [react(), localDatabasePlugin()],
+  server: {
+    watch: {
+      ignored: ['**/src/data/progress.json']
+    }
+  }
 })
-
