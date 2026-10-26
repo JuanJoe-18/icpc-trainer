@@ -89,6 +89,7 @@ function localDatabasePlugin() {
 }
 
 export default defineConfig({
+  base: process.env.GITHUB_PAGES ? '/icpc-trainer/' : './',
   plugins: [react(), localDatabasePlugin()],
   server: {
     watch: {
